@@ -31,6 +31,8 @@ class VirtualKeyboardDefaultLayoutKeys extends VirtualKeyboardLayoutKeys {
         return _defaultEnglishLayout;
       case VirtualKeyboardDefaultLayouts.Arabic:
         return _defaultArabicLayout;
+      case VirtualKeyboardDefaultLayouts.Italian:
+        return _defaultItalianLayout;
       default:
     }
     return _defaultEnglishLayout;
@@ -53,52 +55,14 @@ const List<List> _defaultEnglishLayout = [
     '0',
   ],
   // Row 2
-  const [
-    'q',
-    'w',
-    'e',
-    'r',
-    't',
-    'y',
-    'u',
-    'i',
-    'o',
-    'p',
-    VirtualKeyboardKeyAction.Backspace
-  ],
+  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const [
-    'a',
-    's',
-    'd',
-    'f',
-    'g',
-    'h',
-    'j',
-    'k',
-    'l',
-    ';',
-    '\'',
-    VirtualKeyboardKeyAction.Return
-  ],
+  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [
-    VirtualKeyboardKeyAction.Shift,
-    'z',
-    'x',
-    'c',
-    'v',
-    'b',
-    'n',
-    'm',
-    ',',
-    '.',
-    '/',
-    VirtualKeyboardKeyAction.Shift
-  ],
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.Shift],
   // Row 5
   const [
-    VirtualKeyboardKeyAction.SwithLanguage,
+    VirtualKeyboardKeyAction.SwitchLanguage,
     '@',
     VirtualKeyboardKeyAction.Space,
     '&',
@@ -121,58 +85,48 @@ const List<List> _defaultArabicLayout = [
     '0',
   ],
   // Row 2
-  const [
-    'ض',
-    'ص',
-    'ث',
-    'ق',
-    'ف',
-    'غ',
-    'ع',
-    'ه',
-    'خ',
-    'ح',
-    'ج',
-    'د',
-    VirtualKeyboardKeyAction.Backspace
-  ],
+  const ['ض', 'ص', 'ث', 'ق', 'ف', 'غ', 'ع', 'ه', 'خ', 'ح', 'ج', 'د', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const [
-    'ش',
-    'س',
-    'ي',
-    'ب',
-    'ل',
-    'ا',
-    'ت',
-    'ن',
-    'م',
-    'ك',
-    'ط',
-    VirtualKeyboardKeyAction.Return
-  ],
+  const ['ش', 'س', 'ي', 'ب', 'ل', 'ا', 'ت', 'ن', 'م', 'ك', 'ط', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [
-    'ذ',
-    'ئ',
-    'ء',
-    'ؤ',
-    'ر',
-    'لا',
-    'ى',
-    'ة',
-    'و',
-    'ز',
-    'ظ',
-    VirtualKeyboardKeyAction.Shift
-  ],
+  const ['ذ', 'ئ', 'ء', 'ؤ', 'ر', 'لا', 'ى', 'ة', 'و', 'ز', 'ظ', VirtualKeyboardKeyAction.Shift],
   // Row 5
   const [
-    VirtualKeyboardKeyAction.SwithLanguage,
+    VirtualKeyboardKeyAction.SwitchLanguage,
     '@',
     VirtualKeyboardKeyAction.Space,
     '-',
     '.',
+    '_',
+  ]
+];
+
+const List<List> _defaultItalianLayout = [
+  // Row 1
+  const [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '0',
+  ],
+  // Row 2
+  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'è', VirtualKeyboardKeyAction.Backspace],
+  // Row 3
+  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ò', 'à', 'ù', ';', '\'', VirtualKeyboardKeyAction.Return],
+  // Row 4
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.Shift],
+  // Row 5
+  const [
+    VirtualKeyboardKeyAction.SwitchLanguage,
+    '@',
+    VirtualKeyboardKeyAction.Space,
+    '&',
     '_',
   ]
 ];

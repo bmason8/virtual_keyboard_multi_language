@@ -29,53 +29,14 @@ const List<List> _arabicLayout = [
     '0',
   ],
   // Row 2
-  const [
-    'ض',
-    'ص',
-    'ث',
-    'ق',
-    'ف',
-    'غ',
-    'ع',
-    'ه',
-    'خ',
-    'ح',
-    'د',
-    VirtualKeyboardKeyAction.Backspace
-  ],
+  const ['ض', 'ص', 'ث', 'ق', 'ف', 'غ', 'ع', 'ه', 'خ', 'ح', 'د', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const [
-    'ش',
-    'س',
-    'ي',
-    'ب',
-    'ل',
-    'ا',
-    'ت',
-    'ن',
-    'م',
-    'ك',
-    'ط',
-    VirtualKeyboardKeyAction.Return
-  ],
+  const ['ش', 'س', 'ي', 'ب', 'ل', 'ا', 'ت', 'ن', 'م', 'ك', 'ط', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [
-    'ذ',
-    'ئ',
-    'ء',
-    'ؤ',
-    'ر',
-    'لا',
-    'ى',
-    'ة',
-    'و',
-    '.',
-    'ظ',
-    VirtualKeyboardKeyAction.Shift
-  ],
+  const ['ذ', 'ئ', 'ء', 'ؤ', 'ر', 'لا', 'ى', 'ة', 'و', '.', 'ظ', VirtualKeyboardKeyAction.Shift],
   // Row 5
   const [
-    VirtualKeyboardKeyAction.SwithLanguage,
+    VirtualKeyboardKeyAction.SwitchLanguage,
     '@',
     VirtualKeyboardKeyAction.Space,
     '-',

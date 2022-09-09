@@ -6,6 +6,7 @@ abstract class VirtualKeyboardLayoutKeys {
 
   List<List> get defaultEnglishLayout => _defaultEnglishLayout;
   List<List> get defaultArabicLayout => _defaultArabicLayout;
+  List<List> get defaultItalianLayout => _defaultItalianLayout;
 
   List<List> get activeLayout => getLanguage(activeIndex);
   int getLanguagesCount();

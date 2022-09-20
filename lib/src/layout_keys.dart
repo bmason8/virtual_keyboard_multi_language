@@ -185,24 +185,20 @@ const List<List> _germanDefaultLayout = [
   // Row 1
   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
   // German specific characters
-  const [
-    '<',
-    '>',
-    '€',
-  ],
+  const ['!', '"', '§', '\$', '/', '(', ')', '=', 'ß', '`'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'ü', '+', VirtualKeyboardKeyAction.Backspace],
+  const ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '+', '*', VirtualKeyboardKeyAction.Backspace],
   // Row 3
   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-'],
+  const [VirtualKeyboardKeyAction.Shift, 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', ';', ':', '_'],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
+    '<',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '>',
+    '@',
   ]
 ];
 
@@ -288,19 +284,7 @@ const List<List> _frenchDefaultLayout = [
   // Row 3
   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù', '\'', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [
-    VirtualKeyboardKeyAction.Shift,
-    'z',
-    'x',
-    'c',
-    'v',
-    'b',
-    'n',
-    ',',
-    ';',
-    ':',
-    '.',
-  ],
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '.', '='],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,

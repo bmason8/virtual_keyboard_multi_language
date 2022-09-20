@@ -112,7 +112,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           break;
         case VirtualKeyboardKeyAction.Shift:
           break;
-        // TODO: ADD MISSING CASE FOR SPECIAL CHARACTERS
         default:
       }
     }
@@ -129,6 +128,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
   @override
   void didUpdateWidget(VirtualKeyboard oldWidget) {
+    // Used to ensure the widget rebuilds correctly when dismissed while viewing special characters layout
+    if (oldWidget.usingSpecialCharactersRow) {
+      customLayoutKeys.switchToSpecialCharacters(false);
+    }
     super.didUpdateWidget(oldWidget);
     setState(() {
       type = widget.type;
@@ -180,7 +183,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
   Widget _alphanumeric() {
     return Container(
-      height: height,
+      height: height + 24,
       width: width ?? MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -248,11 +251,14 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         color: (widget.usingSpecialCharactersRow && rowNum == 1 && keyboardRows.length > 5)
             ? widget.specialCharactersRowColor
             : Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          // Generate keboard keys
-          children: items,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // Generate keyboard keys
+            children: items,
+          ),
         ),
       );
     });
@@ -266,17 +272,26 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   /// Creates default UI element for keyboard Key.
   Widget _keyboardDefaultKey(VirtualKeyboardKey key) {
     return Expanded(
-        child: InkWell(
-      onTap: () {
-        _onKeyPress(key);
-      },
-      child: Container(
-        height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-        child: Center(
-            child: Text(
-          alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
-          style: textStyle,
-        )),
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
+      child: InkWell(
+        onTap: () {
+          _onKeyPress(key);
+        },
+        child: Container(
+          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          decoration: BoxDecoration(
+            color: Colors.blue.shade200,
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.0),
+            ),
+          ),
+          child: Center(
+              child: Text(
+            alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
+            style: textStyle,
+          )),
+        ),
       ),
     ));
   }

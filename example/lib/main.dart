@@ -75,13 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(),
             ),
             Container(
-              color: Colors.blue,
+              color: Colors.black87,
               child: VirtualKeyboard(
                   height: 300,
                   //width: 500,
+                  rowVerticalPadding: 2.0,
                   usingSpecialCharactersRow: true,
                   specialCharactersRowColor: Colors.lightBlue,
                   textColor: Colors.white,
+                  keyContainerColor: Colors.lightBlue,
                   textController: _controllerText,
                   //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [

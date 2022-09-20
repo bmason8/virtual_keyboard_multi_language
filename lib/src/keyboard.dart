@@ -17,11 +17,15 @@ class VirtualKeyboard extends StatefulWidget {
   /// Virtual keyboard height. Default is 300
   final double height;
 
+  final double rowVerticalPadding;
+
   /// Virtual keyboard height. Default is full screen width
   final double? width;
 
   /// Color for key texts and icons.
   final Color textColor;
+
+  final Color keyContainerColor;
 
   /// Color row behind
   final Color specialCharactersRowColor;
@@ -61,9 +65,11 @@ class VirtualKeyboard extends StatefulWidget {
       this.textController,
       this.reverseLayout = false,
       this.height = _virtualKeyboardDefaultHeight,
+      this.rowVerticalPadding = 0.0,
       this.usingSpecialCharactersRow = false,
       this.specialCharactersRowColor = Colors.transparent,
       this.textColor = Colors.black,
+      this.keyContainerColor = Colors.transparent,
       this.fontSize = 14,
       this.alwaysCaps = false})
       : super(key: key);
@@ -182,8 +188,14 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   }
 
   Widget _alphanumeric() {
+    int numberOfRows = _getKeyboardRows(customLayoutKeys).length;
+    print('numberOfRows: $numberOfRows');
+    print('rowPadding: ${widget.rowVerticalPadding}');
+    double testHeight = (widget.rowVerticalPadding * numberOfRows);
+    print('height: ${testHeight + height}');
     return Container(
-      height: height + 24,
+      height: height + ((widget.rowVerticalPadding + 2) * numberOfRows),
+      // height: height,
       width: width ?? MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -252,7 +264,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             ? widget.specialCharactersRowColor
             : Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          padding: EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -281,7 +293,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         child: Container(
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,
           decoration: BoxDecoration(
-            color: Colors.blue.shade200,
+            color: widget.keyContainerColor,
             borderRadius: BorderRadius.all(
               Radius.circular(12.0),
             ),

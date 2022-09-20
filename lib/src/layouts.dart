@@ -1,3 +1,3 @@
 part of virtual_keyboard_multi_language;
 
-enum VirtualKeyboardDefaultLayouts { Arabic, English, Italian }
+enum VirtualKeyboardDefaultLayouts { English, German, Spanish, French, Portuguese }

@@ -33,7 +33,7 @@ This project has forked from `virtual_keyboard` project because the `virtual_key
 Flutter widget to show virtual keyboards.
 ```dart
 // Keyboard Type: Can be Numeric or Alphanumeric.
-VirtualKeyboardType type
+VirtualKeyboardType type;
 ```
 ```dart
 // Callback for Key press event. Called with pressed `Key` object.

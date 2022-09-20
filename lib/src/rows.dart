@@ -44,13 +44,13 @@ List<VirtualKeyboardKey> _getKeyboardRowKeysNumeric(rowNum) {
 }
 
 /// Returns a list of `VirtualKeyboardKey` objects.
-List<VirtualKeyboardKey> _getKeyboardRowKeys(
-    VirtualKeyboardLayoutKeys layoutKeys, rowNum) {
+List<VirtualKeyboardKey> _getKeyboardRowKeys(VirtualKeyboardLayoutKeys layoutKeys, rowNum) {
   // Generate VirtualKeyboardKey objects for each row.
-  return List.generate(layoutKeys.activeLayout[rowNum].length, (int keyNum) {
+  return List.generate(layoutKeys.activeLayout.defaultLayout[rowNum].length, (int keyNum) {
     // Get key string value.
-    if (layoutKeys.activeLayout[rowNum][keyNum] is String) {
-      String key = layoutKeys.activeLayout[rowNum][keyNum];
+    // print('layoutKeys.activeLayout[rowNum][keyNum]: ${layoutKeys.activeLayout[rowNum][keyNum]}');
+    if (layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] is String) {
+      String key = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum];
 
       // Create and return new VirtualKeyboardKey object.
       return VirtualKeyboardKey(
@@ -59,20 +59,16 @@ List<VirtualKeyboardKey> _getKeyboardRowKeys(
         keyType: VirtualKeyboardKeyType.String,
       );
     } else {
-      var action =
-          layoutKeys.activeLayout[rowNum][keyNum] as VirtualKeyboardKeyAction;
-      return VirtualKeyboardKey(
-          keyType: VirtualKeyboardKeyType.Action, action: action);
+      var action = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] as VirtualKeyboardKeyAction;
+      return VirtualKeyboardKey(keyType: VirtualKeyboardKeyType.Action, action: action);
     }
   });
 }
 
 /// Returns a list of VirtualKeyboard rows with `VirtualKeyboardKey` objects.
-List<List<VirtualKeyboardKey>> _getKeyboardRows(
-    VirtualKeyboardLayoutKeys layoutKeys) {
+List<List<VirtualKeyboardKey>> _getKeyboardRows(VirtualKeyboardLayoutKeys layoutKeys) {
   // Generate lists for each keyboard row.
-  return List.generate(layoutKeys.activeLayout.length,
-      (int rowNum) => _getKeyboardRowKeys(layoutKeys, rowNum));
+  return List.generate(layoutKeys.activeLayout.defaultLayout.length, (int rowNum) => _getKeyboardRowKeys(layoutKeys, rowNum));
 }
 
 /// Returns a list of VirtualKeyboard rows with `VirtualKeyboardKey` objects.
@@ -90,9 +86,7 @@ List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
 
         // Right Shift
         rowKeys.add(
-          VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Backspace),
+          VirtualKeyboardKey(keyType: VirtualKeyboardKeyType.Action, action: VirtualKeyboardKeyAction.Backspace),
         );
         break;
       default:

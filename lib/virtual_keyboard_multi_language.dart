@@ -2,6 +2,7 @@ library virtual_keyboard_multi_language;
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:virtual_keyboard_multi_language/src/keyboard_language.dart';
 
 part './src/key_action.dart';
 part './src/key_type.dart';

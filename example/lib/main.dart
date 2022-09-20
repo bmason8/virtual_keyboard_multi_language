@@ -62,10 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SwitchListTile(
               title: Text(
-                'Keyboard Type = ' +
-                    (isNumericMode
-                        ? 'VirtualKeyboardType.Numeric'
-                        : 'VirtualKeyboardType.Alphanumeric'),
+                'Keyboard Type = ' + (isNumericMode ? 'VirtualKeyboardType.Numeric' : 'VirtualKeyboardType.Alphanumeric'),
               ),
               value: isNumericMode,
               onChanged: (val) {
@@ -78,21 +75,24 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(),
             ),
             Container(
-              color: Colors.deepPurple,
+              color: Colors.blue,
               child: VirtualKeyboard(
                   height: 300,
                   //width: 500,
+                  usingSpecialCharactersRow: true,
+                  specialCharactersRowColor: Colors.lightBlue,
                   textColor: Colors.white,
                   textController: _controllerText,
                   //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [
-                    VirtualKeyboardDefaultLayouts.Arabic,
-                    VirtualKeyboardDefaultLayouts.English
+                    VirtualKeyboardDefaultLayouts.English,
+                    VirtualKeyboardDefaultLayouts.German,
+                    VirtualKeyboardDefaultLayouts.Spanish,
+                    VirtualKeyboardDefaultLayouts.French,
+                    VirtualKeyboardDefaultLayouts.Portuguese,
                   ],
                   //reverseLayout :true,
-                  type: isNumericMode
-                      ? VirtualKeyboardType.Numeric
-                      : VirtualKeyboardType.Alphanumeric,
+                  type: isNumericMode ? VirtualKeyboardType.Numeric : VirtualKeyboardType.Alphanumeric,
                   onKeyPress: _onKeyPress),
             )
           ],

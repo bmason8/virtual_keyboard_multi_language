@@ -4,11 +4,11 @@ part of virtual_keyboard_multi_language;
 ///  `height` argument to `VirtualKeyboard` widget.
 const double _virtualKeyboardDefaultHeight = 300;
 
-const int _virtualKeyboardBackspaceEventPerioud = 250;
+const int _virtualKeyboardBackspaceEventPeriod = 250;
 
 /// Virtual Keyboard widget.
 class VirtualKeyboard extends StatefulWidget {
-  /// Keyboard Type: Should be inited in creation time.
+  /// Keyboard Type: Should be initiated in creation time.
   final VirtualKeyboardType type;
 
   /// Callback for Key press event. Called with pressed `Key` object.
@@ -22,6 +22,11 @@ class VirtualKeyboard extends StatefulWidget {
 
   /// Color for key texts and icons.
   final Color textColor;
+
+  /// Color row behind
+  final Color specialCharactersRowColor;
+
+  final bool usingSpecialCharactersRow;
 
   /// Font size for keyboard keys.
   final double fontSize;
@@ -56,6 +61,8 @@ class VirtualKeyboard extends StatefulWidget {
       this.textController,
       this.reverseLayout = false,
       this.height = _virtualKeyboardDefaultHeight,
+      this.usingSpecialCharactersRow = false,
+      this.specialCharactersRowColor = Colors.transparent,
       this.textColor = Colors.black,
       this.fontSize = 14,
       this.alwaysCaps = false})
@@ -86,6 +93,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
   // True if shift is enabled.
   bool isShiftEnabled = false;
+  bool isSpecialCharactersEnabled = false;
 
   void _onKeyPress(VirtualKeyboardKey key) {
     if (key.keyType == VirtualKeyboardKeyType.String) {
@@ -104,6 +112,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           break;
         case VirtualKeyboardKeyAction.Shift:
           break;
+        // TODO: ADD MISSING CASE FOR SPECIAL CHARACTERS
         default:
       }
     }
@@ -236,7 +245,9 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
       if (this.reverseLayout) items = items.reversed.toList();
       return Material(
-        color: Colors.transparent,
+        color: (widget.usingSpecialCharactersRow && rowNum == 1 && keyboardRows.length > 5)
+            ? widget.specialCharactersRowColor
+            : Colors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,7 +271,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         _onKeyPress(key);
       },
       child: Container(
-        height: height / customLayoutKeys.activeLayout.length,
+        height: height / customLayoutKeys.activeLayout.defaultLayout.length,
         child: Center(
             child: Text(
           alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
@@ -282,7 +293,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             onLongPress: () {
               longPress = true;
               // Start sending backspace key events while longPress is true
-              Timer.periodic(Duration(milliseconds: _virtualKeyboardBackspaceEventPerioud), (timer) {
+              Timer.periodic(Duration(milliseconds: _virtualKeyboardBackspaceEventPeriod), (timer) {
                 if (longPress) {
                   _onKeyPress(key);
                 } else {
@@ -332,6 +343,20 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               ),
             ));
         break;
+      case VirtualKeyboardKeyAction.SpecialCharacters:
+        actionKey = GestureDetector(
+          onTap: () {
+            setState(() {
+              isSpecialCharactersEnabled = !isSpecialCharactersEnabled;
+              customLayoutKeys.switchToSpecialCharacters(isSpecialCharactersEnabled);
+            });
+          },
+          child: Icon(
+            Icons.emoji_symbols,
+            color: textColor,
+          ),
+        );
+        break;
     }
 
     var wdgt = InkWell(
@@ -348,7 +373,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       },
       child: Container(
         alignment: Alignment.center,
-        height: height / customLayoutKeys.activeLayout.length,
+        height: height / customLayoutKeys.activeLayout.defaultLayout.length,
         child: actionKey,
       ),
     );

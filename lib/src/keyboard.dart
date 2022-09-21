@@ -189,10 +189,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
   Widget _alphanumeric() {
     int numberOfRows = _getKeyboardRows(customLayoutKeys).length;
-    print('numberOfRows: $numberOfRows');
-    print('rowPadding: ${widget.rowVerticalPadding}');
-    double testHeight = (widget.rowVerticalPadding * numberOfRows);
-    print('height: ${testHeight + height}');
+    // print('numberOfRows: $numberOfRows');
+    // print('rowPadding: ${widget.rowVerticalPadding}');
+    // double testHeight = (widget.rowVerticalPadding * numberOfRows);
+    // print('height: ${testHeight + height}');
     return Container(
       height: height + ((widget.rowVerticalPadding + 2) * numberOfRows),
       // height: height,
@@ -264,7 +264,9 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             ? widget.specialCharactersRowColor
             : Colors.transparent,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
+          padding: (rowNum == 1)
+              ? EdgeInsets.only(bottom: widget.rowVerticalPadding)
+              : EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,

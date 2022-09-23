@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/benmason/fvm/versions/3.3.1"
+export "FLUTTER_ROOT=/Users/benmason/fvm/versions/stable"
 export "FLUTTER_APPLICATION_PATH=/Users/benmason/Developer/Tews/virtual_keyboard_multi_language/example"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=/Users/benmason/Developer/Tews/virtual_keyboard_multi_language/example/lib/main.dart"

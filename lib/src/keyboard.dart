@@ -25,11 +25,16 @@ class VirtualKeyboard extends StatefulWidget {
   /// Color for key texts and icons.
   final Color textColor;
 
+  /// Color of the Key cap. Default is Colors.transparent
   final Color keyContainerColor;
+
+  /// Color of the Special Character keys
+  final Color specialCharacterKeysContainerColor;
 
   /// Color row behind
   final Color specialCharactersRowColor;
 
+  /// Used to know if it should use the specialCharactersRowColor
   final bool usingSpecialCharactersRow;
 
   /// Font size for keyboard keys.
@@ -70,6 +75,7 @@ class VirtualKeyboard extends StatefulWidget {
       this.specialCharactersRowColor = Colors.transparent,
       this.textColor = Colors.black,
       this.keyContainerColor = Colors.transparent,
+      this.specialCharacterKeysContainerColor = Colors.transparent,
       this.fontSize = 14,
       this.alwaysCaps = false})
       : super(key: key);
@@ -264,8 +270,9 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             ? widget.specialCharactersRowColor
             : Colors.transparent,
         child: Padding(
-          padding: (rowNum == 1)
-              ? EdgeInsets.only(bottom: widget.rowVerticalPadding)
+          padding: (rowNum == 1 || rowNum == keyboardRows.length - 1)
+              ? EdgeInsets.all(0.0)
+              // ? EdgeInsets.only(bottom: widget.rowVerticalPadding)
               : EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -338,6 +345,12 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             child: Container(
               height: double.infinity,
               width: double.infinity,
+              decoration: BoxDecoration(
+                color: widget.specialCharacterKeysContainerColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12.0),
+                ),
+              ),
               child: Icon(
                 Icons.backspace,
                 color: textColor,
@@ -345,15 +358,47 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             ));
         break;
       case VirtualKeyboardKeyAction.Shift:
-        actionKey = Icon(Icons.arrow_upward, color: textColor);
+        actionKey = Container(
+            height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            decoration: BoxDecoration(
+              color: widget.specialCharacterKeysContainerColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(12.0),
+              ),
+            ),
+            child: Icon(
+              Icons.arrow_upward,
+              color: textColor,
+            ));
         break;
       case VirtualKeyboardKeyAction.Space:
-        actionKey = actionKey = Icon(Icons.space_bar, color: textColor);
+        actionKey = actionKey = Container(
+            height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: widget.keyContainerColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(12.0),
+              ),
+            ),
+            child: Icon(
+              Icons.space_bar,
+              color: textColor,
+            ));
         break;
       case VirtualKeyboardKeyAction.Return:
-        actionKey = Icon(
-          Icons.keyboard_return,
-          color: textColor,
+        actionKey = Container(
+          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          decoration: BoxDecoration(
+            color: widget.specialCharacterKeysContainerColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.0),
+            ),
+          ),
+          child: Icon(
+            Icons.keyboard_return,
+            color: textColor,
+          ),
         );
         break;
       case VirtualKeyboardKeyAction.SwitchLanguage:
@@ -366,6 +411,12 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             child: Container(
               height: double.infinity,
               width: double.infinity,
+              decoration: BoxDecoration(
+                color: widget.specialCharacterKeysContainerColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12.0),
+                ),
+              ),
               child: Icon(
                 Icons.language,
                 color: textColor,
@@ -380,9 +431,18 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               customLayoutKeys.switchToSpecialCharacters(isSpecialCharactersEnabled);
             });
           },
-          child: Icon(
-            Icons.emoji_symbols,
-            color: textColor,
+          child: Container(
+            height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            decoration: BoxDecoration(
+              color: widget.specialCharacterKeysContainerColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(12.0),
+              ),
+            ),
+            child: Icon(
+              Icons.emoji_symbols,
+              color: textColor,
+            ),
           ),
         );
         break;

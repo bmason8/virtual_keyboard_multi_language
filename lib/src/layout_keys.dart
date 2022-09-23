@@ -276,15 +276,13 @@ const List<List> _spanishSpecialCharactersLayout = [
 /// FRENCH KEYBOARD LAYOUTS
 const List<List> _frenchDefaultLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-  // French specific characters
-  const ['<', '>', '€', 'é', 'è', 'ç', 'à'],
+  const ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '°', '_'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^', '\$', VirtualKeyboardKeyAction.Backspace],
+  const ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^', '\$', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù', '\'', VirtualKeyboardKeyAction.Return],
+  const ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù', '\`', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '.', '='],
+  const [VirtualKeyboardKeyAction.Shift, 'w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '=', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
@@ -296,13 +294,14 @@ const List<List> _frenchDefaultLayout = [
 ];
 const List<List> _frenchSpecialCharactersLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+  // French specific characters
+  const ['@', '&', 'é', '"', '\'', '(', '§', 'è', '!', 'ç', 'à', ')', '-'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', VirtualKeyboardKeyAction.Backspace],
+  const [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '€', '¨', '*', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
+  const [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '%', '£', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
+  const [VirtualKeyboardKeyAction.Shift, '<', '>', ' ', ' ', ' ', ' ', '?', '.', '/', '+', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,

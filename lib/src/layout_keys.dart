@@ -152,72 +152,162 @@ KeyboardLanguage _portugueseKeyboardLayout = KeyboardLanguage(_portugueseDefault
 //   // ]
 // ];
 /// Keys for Virtual Keyboard's rows.
+/// ALL CHARACTERS AND NO SPECIAL CHARACTERS BUTTON
+// const List<List> _englishDefaultLayout = [
+//   // Row 1
+//   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+//   // English specific characters
+//   const ['!', '@', '#', '\$', '%', '^', '&', '*', '(', ')', '-', '+'],
+//   // Row 2
+//   const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', VirtualKeyboardKeyAction.Backspace],
+//   // Row 3
+//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
+//   // Row 4
+//   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+//   // Row 5
+//   const [
+//     VirtualKeyboardKeyAction.SwitchLanguage,
+//     '@',
+//     VirtualKeyboardKeyAction.Space,
+//     '_',
+//     VirtualKeyboardKeyAction.SpecialCharacters,
+//   ]
+// ];
+
+/// NORMAL ENGLISH KEYBOARD WITH SPECIAL CHARACTERS HIDDEN BEHIND A SPECIAL CHARACTERS BUTTON
 const List<List> _englishDefaultLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-  // English specific characters
-  const ['!', '@', '#', '\$', '%', '^', '&', '*', '(', ')', '-', '+'],
+  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', VirtualKeyboardKeyAction.Backspace],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', VirtualKeyboardKeyAction.Backspace],
+  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
   // Row 3
   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
+    // '',
+    // '@',
     VirtualKeyboardKeyAction.Space,
-    '_',
-    VirtualKeyboardKeyAction.SpecialCharacters,
+    '',
+    // '_',
+    // VirtualKeyboardKeyAction.SpecialCharacters,
   ]
 ];
 
 const List<List> _englishSpecialCharactersLayout = [
-  // Row 1
-  const ['{', '}', '|', ':', '"', '<', '>', '?'],
+  // English specific characters
+  const ['!', '@', '#', '\$', '%', '^', '&', '*', '(', ')', '_', '+', VirtualKeyboardKeyAction.Backspace],
   // Row 2
-  const ['', '', '', '', '', '', '', '', '', '', '', VirtualKeyboardKeyAction.SpecialCharacters],
-];
-
-/// GERMAN KEYBOARD LAYOUTS
-const List<List> _germanDefaultLayout = [
-  // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-  // German specific characters
-  const ['!', '"', '§', '\$', '/', '(', ')', '=', 'ß', '`'],
-  // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '+', '*', VirtualKeyboardKeyAction.Backspace],
+  const ['', '', '', '', '', '', '', '', '', '', '{', '}', '|'],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#', VirtualKeyboardKeyAction.Return],
+  const ['', '', '', '', '', '', '', '', '', ':', '"', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', ';', ':', '_'],
+  const [
+    VirtualKeyboardKeyAction.Shift,
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '<',
+    '>',
+    '?',
+    VirtualKeyboardKeyAction.SpecialCharacters,
+  ],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '<',
+    // '@',
     VirtualKeyboardKeyAction.Space,
-    '>',
-    '@',
+    '',
+    // VirtualKeyboardKeyAction.SpecialCharacters,
   ]
 ];
 
-const List<List> _germanSpecialCharactersLayout = [
+/// GERMAN KEYBOARD LAYOUTS
+/// ALL CHARACTERS AND NO SPECIAL CHARACTERS BUTTON
+// const List<List> _germanDefaultLayout = [
+//   // Row 1
+//   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+//   // German specific characters
+//   const ['!', '"', '§', '\$', '/', '(', ')', '=', 'ß', '`'],
+//   // Row 2
+//   const ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '+', '*', VirtualKeyboardKeyAction.Backspace],
+//   // Row 3
+//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#', VirtualKeyboardKeyAction.Return],
+//   // Row 4
+//   const [VirtualKeyboardKeyAction.Shift, 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', ';', ':', '_'],
+//   // Row 5
+//   const [
+//     VirtualKeyboardKeyAction.SwitchLanguage,
+//     '<',
+//     VirtualKeyboardKeyAction.Space,
+//     '>',
+//     '@',
+//   ]
+// ];
+//
+// const List<List> _germanSpecialCharactersLayout = [
+//   // Row 1
+//   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+//   // Row 2
+//   const ['q', 'w', '€', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '*', VirtualKeyboardKeyAction.Backspace],
+//   // Row 3
+//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', '@', 'ö', 'ä', '\'', VirtualKeyboardKeyAction.Return],
+//   // Row 4
+//   const [VirtualKeyboardKeyAction.Shift, 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', VirtualKeyboardKeyAction.SpecialCharacters],
+//   // Row 5
+//   const [
+//     VirtualKeyboardKeyAction.SwitchLanguage,
+//     '@',
+//     VirtualKeyboardKeyAction.Space,
+//     '&',
+//     '_',
+//   ]
+// ];
+
+/// NORMAL GERMAN KEYBOARD WITH SPECIAL CHARACTERS HIDDEN BEHIND A SPECIAL CHARACTERS BUTTON
+const List<List> _germanDefaultLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+  const ['^', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß', ','],
   // Row 2
-  const ['q', 'w', '€', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '*', VirtualKeyboardKeyAction.Backspace],
+  const ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '+', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', '@', 'ö', 'ä', '\'', VirtualKeyboardKeyAction.Return],
+  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä', '#', VirtualKeyboardKeyAction.Return],
   // Row 4
   const [VirtualKeyboardKeyAction.Shift, 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
+    // '<',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '',
+    // '>',
+    // '@',
+  ]
+];
+
+const List<List> _germanSpecialCharactersLayout = [
+  // Row 1
+  const ['!', '"', '§', '\$', '/', '(', ')', '=', '?', '`'],
+  // Row 2
+  const ['', '', '€', '', '', '', '', '', '', '', '', '*', VirtualKeyboardKeyAction.Backspace],
+  // Row 3
+  const ['', '', '', '', '', '', '', '', '@', '', '', '\'', VirtualKeyboardKeyAction.Return],
+  // Row 4
+  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', '', '', '_', VirtualKeyboardKeyAction.SpecialCharacters],
+  // Row 5
+  const [
+    VirtualKeyboardKeyAction.SwitchLanguage,
+    // '@',
+    VirtualKeyboardKeyAction.Space,
+    '',
+    // '&',
+    // '_',
   ]
 ];
 
@@ -232,19 +322,7 @@ const List<List> _spanishDefaultLayout = [
   // Row 3
   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', ';', '\'', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [
-    VirtualKeyboardKeyAction.Shift,
-    'z',
-    'x',
-    'c',
-    'v',
-    'b',
-    'n',
-    'm',
-    ',',
-    '.',
-    '/',
-  ],
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,

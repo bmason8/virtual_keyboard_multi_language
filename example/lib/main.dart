@@ -79,7 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: VirtualKeyboard(
                   height: 300,
                   //width: 500,
-                  rowVerticalPadding: 2.0,
+                  fontSize: 20,
+                  rowVerticalPadding: 4.0,
                   usingSpecialCharactersRow: false,
                   specialCharactersRowColor: Colors.lightBlue,
                   specialCharacterKeysContainerColor: Colors.lightBlue.shade900,

@@ -6,6 +6,8 @@ const double _virtualKeyboardDefaultHeight = 300;
 
 const int _virtualKeyboardBackspaceEventPeriod = 250;
 
+const double horizontalKeyPadding = 4.0;
+
 /// Virtual Keyboard widget.
 class VirtualKeyboard extends StatefulWidget {
   /// Keyboard Type: Should be initiated in creation time.
@@ -200,7 +202,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     // double testHeight = (widget.rowVerticalPadding * numberOfRows);
     // print('height: ${testHeight + height}');
     return Container(
-      height: height + ((widget.rowVerticalPadding + 2) * numberOfRows),
+      height: height + ((widget.rowVerticalPadding + 4) * numberOfRows),
       // height: height,
       width: width ?? MediaQuery.of(context).size.width,
       child: Column(
@@ -270,10 +272,11 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             ? widget.specialCharactersRowColor
             : Colors.transparent,
         child: Padding(
-          padding: (rowNum == 1 || rowNum == keyboardRows.length - 1)
-              ? EdgeInsets.all(0.0)
-              // ? EdgeInsets.only(bottom: widget.rowVerticalPadding)
-              : EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
+          padding: EdgeInsets.symmetric(vertical: widget.rowVerticalPadding, horizontal: 1.0),
+          // padding: (rowNum == 0 || rowNum == keyboardRows.length - 1)
+          //     ? EdgeInsets.all(0.0)
+          //     // ? EdgeInsets.only(bottom: widget.rowVerticalPadding)
+          //     : EdgeInsets.symmetric(vertical: widget.rowVerticalPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -294,12 +297,26 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   Widget _keyboardDefaultKey(VirtualKeyboardKey key) {
     return Expanded(
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 0.0),
+      padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
       child: InkWell(
         onTap: () {
           _onKeyPress(key);
         },
-        child: Container(
+        child:
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: widget.keyContainerColor,
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(12.0),
+            //     ),
+            //   ),
+            //   child: Center(
+            //       child: Text(
+            //     alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
+            //     style: textStyle,
+            //   )),
+            // ),
+            Container(
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,
           decoration: BoxDecoration(
             color: widget.keyContainerColor,
@@ -343,7 +360,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               longPress = false;
             },
             child: Container(
-              height: double.infinity,
+              // height: double.infinity,
+              height: height / customLayoutKeys.activeLayout.defaultLayout.length,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: widget.specialCharacterKeysContainerColor,
@@ -360,6 +378,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       case VirtualKeyboardKeyAction.Shift:
         actionKey = Container(
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: widget.specialCharacterKeysContainerColor,
               borderRadius: BorderRadius.all(
@@ -389,6 +408,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       case VirtualKeyboardKeyAction.Return:
         actionKey = Container(
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: widget.specialCharacterKeysContainerColor,
             borderRadius: BorderRadius.all(
@@ -409,7 +429,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               });
             },
             child: Container(
-              height: double.infinity,
+              height: height / customLayoutKeys.activeLayout.defaultLayout.length,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: widget.specialCharacterKeysContainerColor,
@@ -417,9 +437,22 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                   Radius.circular(12.0),
                 ),
               ),
-              child: Icon(
-                Icons.language,
-                color: textColor,
+              child: SizedBox(
+                width: 56,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.language,
+                      color: textColor,
+                    ),
+                    Text(
+                      _getCountryFlag(),
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ],
+                ),
               ),
             ));
         break;
@@ -433,6 +466,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           },
           child: Container(
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: widget.specialCharacterKeysContainerColor,
               borderRadius: BorderRadius.all(
@@ -460,16 +494,47 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
         _onKeyPress(key);
       },
-      child: Container(
-        alignment: Alignment.center,
-        height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-        child: actionKey,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
+        child: Container(
+          alignment: Alignment.center,
+          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          child: actionKey,
+        ),
       ),
     );
 
     if (key.action == VirtualKeyboardKeyAction.Space)
-      return SizedBox(width: (width ?? MediaQuery.of(context).size.width) / 2, child: wdgt);
+      return Flexible(flex: 4, child: wdgt);
+    // return Expanded(child: wdgt);
+    // return SizedBox(width: (width ?? MediaQuery.of(context).size.width) / 2, child: wdgt);
     else
-      return Expanded(child: wdgt);
+      // return Flexible(child: wdgt);
+      return Flexible(child: wdgt);
+    // return Flexible(
+    //     child: ConstrainedBox(
+    //   constraints: BoxConstraints(
+    //     // minWidth: 160,
+    //     maxWidth: 180,
+    //   ),
+    //   child: wdgt,
+    // ));
+  }
+
+  String _getCountryFlag() {
+    switch (widget.defaultLayouts![customLayoutKeys.activeIndex]) {
+      case VirtualKeyboardDefaultLayouts.English:
+        return '🇱🇷';
+      case VirtualKeyboardDefaultLayouts.German:
+        return '🇩🇪';
+      case VirtualKeyboardDefaultLayouts.Spanish:
+        return '🇪🇸';
+      case VirtualKeyboardDefaultLayouts.French:
+        return '🇫🇷';
+      case VirtualKeyboardDefaultLayouts.Portuguese:
+        return '🇵🇹';
+      default:
+        return '🇱🇷';
+    }
   }
 }

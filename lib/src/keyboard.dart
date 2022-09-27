@@ -265,7 +265,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     List<List<VirtualKeyboardKey>> keyboardRows =
         type == VirtualKeyboardType.Numeric ? _getKeyboardRowsNumeric() : _getKeyboardRows(customLayoutKeys, false);
 
-    // NEW - TESTING GETTING SECONDARY CHARACTERS
+    // Get the shift click characters
     List<List<VirtualKeyboardKey>> specialCharacters = _getKeyboardRows(customLayoutKeys, true);
 
     // Generate keyboard row.
@@ -273,9 +273,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       var items = List.generate(keyboardRows[rowNum].length, (int keyNum) {
         // Get the VirtualKeyboardKey object.
         VirtualKeyboardKey virtualKeyboardKey = keyboardRows[rowNum][keyNum];
-        VirtualKeyboardKey spVirtualKeyboardKey = specialCharacters[rowNum][keyNum];
-        // print('virtualKeyboardKey: ${virtualKeyboardKey.text}');
-        // print('SPECIAL CHARACTER KEY: ${spVirtualKeyboardKey.text}');
+        VirtualKeyboardKey shiftClickKeyboardKey = specialCharacters[rowNum][keyNum];
 
         Widget keyWidget;
 
@@ -287,7 +285,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           switch (virtualKeyboardKey.keyType) {
             case VirtualKeyboardKeyType.String:
               // Draw String key.
-              keyWidget = _keyboardDefaultKey(virtualKeyboardKey, spVirtualKeyboardKey);
+              keyWidget =
+                  _keyboardDefaultKey(virtualKeyboardKey, shiftClickKeyboardKey, (type == VirtualKeyboardType.Numeric) ? true : false);
               break;
             case VirtualKeyboardKeyType.Action:
               // Draw action key.
@@ -334,7 +333,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   bool longPress = false;
 
   /// Creates default UI element for keyboard Key.
-  Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey secondaryKey) {
+  Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey secondaryKey, bool isNumeric) {
     return Expanded(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: widget.horizontalKeyPadding, vertical: 0.0),
@@ -352,7 +351,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           ),
           child: Stack(
             children: [
-              if (!isSpecialCharactersEnabled)
+              if (!isSpecialCharactersEnabled && !isNumeric)
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(

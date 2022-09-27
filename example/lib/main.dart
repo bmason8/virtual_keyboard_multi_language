@@ -90,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   horizontalKeyPadding: 4.0,
                   keyContainerColor: Colors.lightBlue,
                   keyCapBorderRadius: 8.0,
+                  shiftClickKeyPadding: 4.0,
                   textController: _controllerText,
                   //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [

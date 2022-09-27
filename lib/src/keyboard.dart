@@ -47,6 +47,9 @@ class VirtualKeyboard extends StatefulWidget {
   /// Border Radius for key caps
   final double keyCapBorderRadius;
 
+  /// Shift click key (top right) padding while viewing keyboard in the default view
+  final double shiftClickKeyPadding;
+
   /// Color row behind
   final Color specialCharactersRowColor;
 
@@ -93,7 +96,8 @@ class VirtualKeyboard extends StatefulWidget {
       this.shiftClickFontSize = 10,
       this.keyContainerColor = Colors.transparent,
       this.specialCharacterKeysContainerColor = Colors.transparent,
-      this.keyCapBorderRadius = 12.0,
+      this.keyCapBorderRadius = 10.0,
+      this.shiftClickKeyPadding = 6.0,
       this.alwaysCaps = false})
       : super(key: key);
 
@@ -352,7 +356,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 6.0, right: 6.0),
+                    padding: EdgeInsets.only(top: widget.shiftClickKeyPadding, right: widget.shiftClickKeyPadding),
                     child: Text(
                       secondaryKey.text ?? '',
                       style: shiftClickTextStyle,

@@ -79,13 +79,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: VirtualKeyboard(
                   height: 300,
                   //width: 500,
-                  fontSize: 20,
                   rowVerticalPadding: 4.0,
                   usingSpecialCharactersRow: false,
                   specialCharactersRowColor: Colors.lightBlue,
                   specialCharacterKeysContainerColor: Colors.lightBlue.shade900,
                   textColor: Colors.white,
+                  fontSize: 20,
+                  shiftClickTextColor: Colors.white,
+                  shiftClickFontSize: 10,
+                  horizontalKeyPadding: 4.0,
                   keyContainerColor: Colors.lightBlue,
+                  keyCapBorderRadius: 8.0,
                   textController: _controllerText,
                   //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [

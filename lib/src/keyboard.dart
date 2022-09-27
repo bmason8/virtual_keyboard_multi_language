@@ -6,8 +6,6 @@ const double _virtualKeyboardDefaultHeight = 300;
 
 const int _virtualKeyboardBackspaceEventPeriod = 250;
 
-const double horizontalKeyPadding = 4.0;
-
 /// Virtual Keyboard widget.
 class VirtualKeyboard extends StatefulWidget {
   /// Keyboard Type: Should be initiated in creation time.
@@ -19,7 +17,11 @@ class VirtualKeyboard extends StatefulWidget {
   /// Virtual keyboard height. Default is 300
   final double height;
 
+  /// Padding between keyboard rows
   final double rowVerticalPadding;
+
+  /// Horizontal padding around each key
+  final double horizontalKeyPadding;
 
   /// Virtual keyboard height. Default is full screen width
   final double? width;
@@ -27,20 +29,29 @@ class VirtualKeyboard extends StatefulWidget {
   /// Color for key texts and icons.
   final Color textColor;
 
+  /// Font size for keyboard keys.
+  final double fontSize;
+
+  /// Color for the shift click characters in the top right while viewing the default keyboard layout.
+  final Color shiftClickTextColor;
+
+  /// Font size for the shift click characters in the top right while viewing the default keyboard layout.
+  final double shiftClickFontSize;
+
   /// Color of the Key cap. Default is Colors.transparent
   final Color keyContainerColor;
 
   /// Color of the Special Character keys
   final Color specialCharacterKeysContainerColor;
 
+  /// Border Radius for key caps
+  final double keyCapBorderRadius;
+
   /// Color row behind
   final Color specialCharactersRowColor;
 
   /// Used to know if it should use the specialCharactersRowColor
   final bool usingSpecialCharactersRow;
-
-  /// Font size for keyboard keys.
-  final double fontSize;
 
   /// the custom layout for multi or single language
   final VirtualKeyboardLayoutKeys? customLayoutKeys;
@@ -73,12 +84,16 @@ class VirtualKeyboard extends StatefulWidget {
       this.reverseLayout = false,
       this.height = _virtualKeyboardDefaultHeight,
       this.rowVerticalPadding = 0.0,
+      this.horizontalKeyPadding = 4.0,
       this.usingSpecialCharactersRow = false,
       this.specialCharactersRowColor = Colors.transparent,
       this.textColor = Colors.black,
+      this.fontSize = 14,
+      this.shiftClickTextColor = Colors.black,
+      this.shiftClickFontSize = 10,
       this.keyContainerColor = Colors.transparent,
       this.specialCharacterKeysContainerColor = Colors.transparent,
-      this.fontSize = 14,
+      this.keyCapBorderRadius = 12.0,
       this.alwaysCaps = false})
       : super(key: key);
 
@@ -98,12 +113,15 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   late double height;
   double? width;
   late Color textColor;
+  late Color shiftClickColor;
   late double fontSize;
+  late double shiftClickFontSize;
   late bool alwaysCaps;
   late bool reverseLayout;
   late VirtualKeyboardLayoutKeys customLayoutKeys;
   // Text Style for keys.
   late TextStyle textStyle;
+  late TextStyle shiftClickTextStyle;
 
   // True if shift is enabled.
   bool isShiftEnabled = false;
@@ -155,6 +173,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       width = widget.width;
       textColor = widget.textColor;
       fontSize = widget.fontSize;
+      shiftClickColor = widget.shiftClickTextColor;
+      shiftClickFontSize = widget.shiftClickFontSize;
       alwaysCaps = widget.alwaysCaps;
       reverseLayout = widget.reverseLayout;
       textController = widget.textController ?? textController;
@@ -163,6 +183,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       textStyle = TextStyle(
         fontSize: fontSize,
         color: textColor,
+      );
+      shiftClickTextStyle = TextStyle(
+        fontSize: shiftClickFontSize,
+        color: shiftClickColor,
       );
     });
   }
@@ -181,12 +205,18 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     height = widget.height;
     textColor = widget.textColor;
     fontSize = widget.fontSize;
+    shiftClickColor = widget.shiftClickTextColor;
+    shiftClickFontSize = widget.shiftClickFontSize;
     alwaysCaps = widget.alwaysCaps;
     reverseLayout = widget.reverseLayout;
     // Init the Text Style for keys.
     textStyle = TextStyle(
       fontSize: fontSize,
       color: textColor,
+    );
+    shiftClickTextStyle = TextStyle(
+      fontSize: shiftClickFontSize,
+      color: shiftClickColor,
     );
   }
 
@@ -303,7 +333,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey secondaryKey) {
     return Expanded(
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
+      padding: EdgeInsets.symmetric(horizontal: widget.horizontalKeyPadding, vertical: 0.0),
       child: InkWell(
         onTap: () {
           _onKeyPress(key);
@@ -313,7 +343,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           decoration: BoxDecoration(
             color: widget.keyContainerColor,
             borderRadius: BorderRadius.all(
-              Radius.circular(12.0),
+              Radius.circular(widget.keyCapBorderRadius),
             ),
           ),
           child: Stack(
@@ -322,10 +352,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                    padding: const EdgeInsets.only(top: 6.0, right: 6.0),
                     child: Text(
                       secondaryKey.text ?? '',
-                      style: textStyle.copyWith(fontSize: 12),
+                      style: shiftClickTextStyle,
                     ),
                   ),
                 ),
@@ -398,7 +428,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               decoration: BoxDecoration(
                 color: widget.specialCharacterKeysContainerColor,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(12.0),
+                  Radius.circular(widget.keyCapBorderRadius),
                 ),
               ),
               child: Icon(
@@ -414,7 +444,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             decoration: BoxDecoration(
               color: widget.specialCharacterKeysContainerColor,
               borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
+                Radius.circular(widget.keyCapBorderRadius),
               ),
             ),
             child: Icon(
@@ -429,7 +459,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             decoration: BoxDecoration(
               color: widget.keyContainerColor,
               borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
+                Radius.circular(widget.keyCapBorderRadius),
               ),
             ),
             child: Icon(
@@ -444,7 +474,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           decoration: BoxDecoration(
             color: widget.specialCharacterKeysContainerColor,
             borderRadius: BorderRadius.all(
-              Radius.circular(12.0),
+              Radius.circular(widget.keyCapBorderRadius),
             ),
           ),
           child: Icon(
@@ -466,7 +496,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               decoration: BoxDecoration(
                 color: widget.specialCharacterKeysContainerColor,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(12.0),
+                  Radius.circular(widget.keyCapBorderRadius),
                 ),
               ),
               child: SizedBox(
@@ -502,7 +532,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             decoration: BoxDecoration(
               color: widget.specialCharacterKeysContainerColor,
               borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
+                Radius.circular(widget.keyCapBorderRadius),
               ),
             ),
             child: Icon(
@@ -527,7 +557,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         _onKeyPress(key);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
+        padding: EdgeInsets.symmetric(horizontal: widget.horizontalKeyPadding, vertical: 0.0),
         child: Container(
           alignment: Alignment.center,
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,

@@ -293,13 +293,13 @@ const List<List> _germanDefaultLayout = [
 
 const List<List> _germanSpecialCharactersLayout = [
   // Row 1
-  const ['!', '"', '§', '\$', '/', '(', ')', '=', '?', '`'],
+  const ['°', '!', '"', '§', '\$', '%', '&', '/', '(', ')', '=', '?', '`'],
   // Row 2
   const ['', '', '€', '', '', '', '', '', '', '', '', '*', VirtualKeyboardKeyAction.Backspace],
   // Row 3
   const ['', '', '', '', '', '', '', '', '@', '', '', '\'', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', '', '', '_', VirtualKeyboardKeyAction.SpecialCharacters],
+  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', ';', ':', '_', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
@@ -315,13 +315,11 @@ const List<List> _germanSpecialCharactersLayout = [
 const List<List> _spanishDefaultLayout = [
   // Row 1
   // TODO: THIS o isn't correct
-  const ['Ọ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '¿', VirtualKeyboardKeyAction.Backspace],
-  // Spanish specific characters
-  // const ['<', '>', 'à', 'é', 'í', 'ó', 'ú', 'ü', '¿'],
+  const ['Ọ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '¿'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '`', '+'],
+  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '`', '+', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', ';', '\'', VirtualKeyboardKeyAction.Return],
+  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', ',', 'ç', VirtualKeyboardKeyAction.Return],
   // Row 4
   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
@@ -333,11 +331,11 @@ const List<List> _spanishDefaultLayout = [
 ];
 const List<List> _spanishSpecialCharactersLayout = [
   // Row 1
-  const ['a', '!', '"', '#', '\$', '%', '&', '/', '(', ')', '=', '?', '¡'],
+  const ['a', '!', '"', '·', '\$', '%', '&', '/', '(', ')', '=', '?', '¡'],
   // Row 2
-  const ['@', '', '', '', '', '', '', '', '', '', '¨', '*', VirtualKeyboardKeyAction.Backspace],
+  const ['\\', '|', '€', '@', '#', '', '', '', '[', ']', '^', '*', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['', '', '', '', '', '', '', '', '', 'ñ', '[', ']', VirtualKeyboardKeyAction.Return],
+  const ['', '', '', '', '', '', '', '', '', '¨', '{', '}', VirtualKeyboardKeyAction.Return],
   // Row 4
   const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', ';', ':', '_', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
@@ -361,10 +359,8 @@ const List<List> _frenchDefaultLayout = [
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '',
   ]
 ];
 const List<List> _frenchSpecialCharactersLayout = [
@@ -380,48 +376,44 @@ const List<List> _frenchSpecialCharactersLayout = [
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '',
   ]
 ];
 
 /// PORTUGUESE KEYBOARD LAYOUTS
+// TODO: THE o and a beside 'p' aren't correct
 const List<List> _portugueseDefaultLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+  const ['§', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '+'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', VirtualKeyboardKeyAction.Backspace],
+  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'õ', ',', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
+  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ç', '~', '\\', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
+  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '',
   ]
 ];
+
 const List<List> _portugueseSpecialCharactersLayout = [
   // Row 1
-  const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+  const ['±', '!', '"', '#', '\$', '%', '&', '/', '(', ')', '=', '?', '*'],
   // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', VirtualKeyboardKeyAction.Backspace],
+  const ['', '', '', '', '', '', '', '', '', '', 'ã', '`', VirtualKeyboardKeyAction.Backspace],
   // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
+  const ['', '', '', '', '', '', '', '', '', '', '^', '|', VirtualKeyboardKeyAction.Return],
   // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
+  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', ';', ':', '_', VirtualKeyboardKeyAction.SpecialCharacters],
   // Row 5
   const [
     VirtualKeyboardKeyAction.SwitchLanguage,
-    '@',
     VirtualKeyboardKeyAction.Space,
-    '&',
-    '_',
+    '',
   ]
 ];
 

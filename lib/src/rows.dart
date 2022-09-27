@@ -44,31 +44,56 @@ List<VirtualKeyboardKey> _getKeyboardRowKeysNumeric(rowNum) {
 }
 
 /// Returns a list of `VirtualKeyboardKey` objects.
-List<VirtualKeyboardKey> _getKeyboardRowKeys(VirtualKeyboardLayoutKeys layoutKeys, rowNum) {
+List<VirtualKeyboardKey> _getKeyboardRowKeys(VirtualKeyboardLayoutKeys layoutKeys, rowNum, bool getSpecialCharacters) {
   // Generate VirtualKeyboardKey objects for each row.
-  return List.generate(layoutKeys.activeLayout.defaultLayout[rowNum].length, (int keyNum) {
-    // Get key string value.
-    // print('layoutKeys.activeLayout[rowNum][keyNum]: ${layoutKeys.activeLayout[rowNum][keyNum]}');
-    if (layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] is String) {
-      String key = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum];
+  if (getSpecialCharacters) {
+    return List.generate(layoutKeys.activeLayout.specialCharactersLayout[rowNum].length, (int keyNum) {
+      // Get key string value.
+      // print('layoutKeys.activeLayout[rowNum][keyNum]: ${layoutKeys.activeLayout[rowNum][keyNum]}');
+      if (layoutKeys.activeLayout.specialCharactersLayout[rowNum][keyNum] is String) {
+        String key = layoutKeys.activeLayout.specialCharactersLayout[rowNum][keyNum];
 
-      // Create and return new VirtualKeyboardKey object.
-      return VirtualKeyboardKey(
-        text: key,
-        capsText: key.toUpperCase(),
-        keyType: VirtualKeyboardKeyType.String,
-      );
-    } else {
-      var action = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] as VirtualKeyboardKeyAction;
-      return VirtualKeyboardKey(keyType: VirtualKeyboardKeyType.Action, action: action);
-    }
-  });
+        // Create and return new VirtualKeyboardKey object.
+        return VirtualKeyboardKey(
+          text: key,
+          capsText: key.toUpperCase(),
+          keyType: VirtualKeyboardKeyType.String,
+        );
+      } else {
+        var action = layoutKeys.activeLayout.specialCharactersLayout[rowNum][keyNum] as VirtualKeyboardKeyAction;
+        return VirtualKeyboardKey(keyType: VirtualKeyboardKeyType.Action, action: action);
+      }
+    });
+  } else {
+    return List.generate(layoutKeys.activeLayout.defaultLayout[rowNum].length, (int keyNum) {
+      // Get key string value.
+      // print('layoutKeys.activeLayout[rowNum][keyNum]: ${layoutKeys.activeLayout[rowNum][keyNum]}');
+      if (layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] is String) {
+        String key = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum];
+
+        // Create and return new VirtualKeyboardKey object.
+        return VirtualKeyboardKey(
+          text: key,
+          capsText: key.toUpperCase(),
+          keyType: VirtualKeyboardKeyType.String,
+        );
+      } else {
+        var action = layoutKeys.activeLayout.defaultLayout[rowNum][keyNum] as VirtualKeyboardKeyAction;
+        return VirtualKeyboardKey(keyType: VirtualKeyboardKeyType.Action, action: action);
+      }
+    });
+  }
 }
 
 /// Returns a list of VirtualKeyboard rows with `VirtualKeyboardKey` objects.
-List<List<VirtualKeyboardKey>> _getKeyboardRows(VirtualKeyboardLayoutKeys layoutKeys) {
+List<List<VirtualKeyboardKey>> _getKeyboardRows(VirtualKeyboardLayoutKeys layoutKeys, bool getSpecialCharacters) {
   // Generate lists for each keyboard row.
-  return List.generate(layoutKeys.activeLayout.defaultLayout.length, (int rowNum) => _getKeyboardRowKeys(layoutKeys, rowNum));
+  if (getSpecialCharacters) {
+    return List.generate(
+        layoutKeys.activeLayout.specialCharactersLayout.length, (int rowNum) => _getKeyboardRowKeys(layoutKeys, rowNum, true));
+  } else {
+    return List.generate(layoutKeys.activeLayout.defaultLayout.length, (int rowNum) => _getKeyboardRowKeys(layoutKeys, rowNum, false));
+  }
 }
 
 /// Returns a list of VirtualKeyboard rows with `VirtualKeyboardKey` objects.

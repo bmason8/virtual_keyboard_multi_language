@@ -196,7 +196,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   }
 
   Widget _alphanumeric() {
-    int numberOfRows = _getKeyboardRows(customLayoutKeys).length;
+    int numberOfRows = _getKeyboardRows(customLayoutKeys, false).length;
     // print('numberOfRows: $numberOfRows');
     // print('rowPadding: ${widget.rowVerticalPadding}');
     // double testHeight = (widget.rowVerticalPadding * numberOfRows);
@@ -229,13 +229,19 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   List<Widget> _rows() {
     // Get the keyboard Rows
     List<List<VirtualKeyboardKey>> keyboardRows =
-        type == VirtualKeyboardType.Numeric ? _getKeyboardRowsNumeric() : _getKeyboardRows(customLayoutKeys);
+        type == VirtualKeyboardType.Numeric ? _getKeyboardRowsNumeric() : _getKeyboardRows(customLayoutKeys, false);
+
+    // NEW - TESTING GETTING SECONDARY CHARACTERS
+    List<List<VirtualKeyboardKey>> specialCharacters = _getKeyboardRows(customLayoutKeys, true);
 
     // Generate keyboard row.
     List<Widget> rows = List.generate(keyboardRows.length, (int rowNum) {
       var items = List.generate(keyboardRows[rowNum].length, (int keyNum) {
         // Get the VirtualKeyboardKey object.
         VirtualKeyboardKey virtualKeyboardKey = keyboardRows[rowNum][keyNum];
+        VirtualKeyboardKey spVirtualKeyboardKey = specialCharacters[rowNum][keyNum];
+        // print('virtualKeyboardKey: ${virtualKeyboardKey.text}');
+        // print('SPECIAL CHARACTER KEY: ${spVirtualKeyboardKey.text}');
 
         Widget keyWidget;
 
@@ -247,7 +253,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           switch (virtualKeyboardKey.keyType) {
             case VirtualKeyboardKeyType.String:
               // Draw String key.
-              keyWidget = _keyboardDefaultKey(virtualKeyboardKey);
+              keyWidget = _keyboardDefaultKey(virtualKeyboardKey, spVirtualKeyboardKey);
               break;
             case VirtualKeyboardKeyType.Action:
               // Draw action key.
@@ -294,7 +300,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   bool longPress = false;
 
   /// Creates default UI element for keyboard Key.
-  Widget _keyboardDefaultKey(VirtualKeyboardKey key) {
+  Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey secondaryKey) {
     return Expanded(
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
@@ -302,21 +308,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         onTap: () {
           _onKeyPress(key);
         },
-        child:
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: widget.keyContainerColor,
-            //     borderRadius: BorderRadius.all(
-            //       Radius.circular(12.0),
-            //     ),
-            //   ),
-            //   child: Center(
-            //       child: Text(
-            //     alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
-            //     style: textStyle,
-            //   )),
-            // ),
-            Container(
+        child: Container(
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,
           decoration: BoxDecoration(
             color: widget.keyContainerColor,
@@ -324,14 +316,54 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               Radius.circular(12.0),
             ),
           ),
-          child: Center(
-              child: Text(
-            alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
-            style: textStyle,
-          )),
+          child: Stack(
+            children: [
+              if (!isSpecialCharactersEnabled)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                    child: Text(
+                      secondaryKey.text ?? '',
+                      style: textStyle.copyWith(fontSize: 12),
+                    ),
+                  ),
+                ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
+                  style: textStyle,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ));
+    // return Expanded(
+    //     child: Padding(
+    //   padding: const EdgeInsets.symmetric(horizontal: horizontalKeyPadding, vertical: 0.0),
+    //   child: InkWell(
+    //     onTap: () {
+    //       _onKeyPress(key);
+    //     },
+    //     child: Container(
+    //       height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+    //       decoration: BoxDecoration(
+    //         color: widget.keyContainerColor,
+    //         borderRadius: BorderRadius.all(
+    //           Radius.circular(12.0),
+    //         ),
+    //       ),
+    //       child: Center(
+    //           child: Text(
+    //         alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
+    //         style: textStyle,
+    //       )),
+    //     ),
+    //   ),
+    // ));
   }
 
   /// Creates default UI element for keyboard Action Key.

@@ -79,6 +79,13 @@ abstract class VirtualKeyboardLayoutKeys {
     //     }
     //     break;
   }
+
+  // VirtualKeyboardLayoutKeys getSecondaryKeys() {
+  //   switch (activeLayout) {
+  //     case defaultEnglishLayout:
+  //       return _englishSpecialCharactersLayout;
+  //   }
+  // }
 }
 
 class VirtualKeyboardDefaultLayoutKeys extends VirtualKeyboardLayoutKeys {

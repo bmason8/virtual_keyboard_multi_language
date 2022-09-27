@@ -42,7 +42,7 @@ class VirtualKeyboard extends StatefulWidget {
   final Color keyContainerColor;
 
   /// Color of the Special Character keys
-  final Color specialCharacterKeysContainerColor;
+  final Color actionKeysContainerColor;
 
   /// Border Radius for key caps
   final double keyCapBorderRadius;
@@ -95,7 +95,7 @@ class VirtualKeyboard extends StatefulWidget {
       this.shiftClickTextColor = Colors.black,
       this.shiftClickFontSize = 10,
       this.keyContainerColor = Colors.transparent,
-      this.specialCharacterKeysContainerColor = Colors.transparent,
+      this.actionKeysContainerColor = Colors.transparent,
       this.keyCapBorderRadius = 10.0,
       this.shiftClickKeyPadding = 6.0,
       this.alwaysCaps = false})
@@ -359,6 +359,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                     padding: EdgeInsets.only(top: widget.shiftClickKeyPadding, right: widget.shiftClickKeyPadding),
                     child: Text(
                       secondaryKey.text ?? '',
+                      textAlign: TextAlign.center,
                       style: shiftClickTextStyle,
                     ),
                   ),
@@ -430,7 +431,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               height: height / customLayoutKeys.activeLayout.defaultLayout.length,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: widget.specialCharacterKeysContainerColor,
+                color: widget.actionKeysContainerColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.keyCapBorderRadius),
                 ),
@@ -446,7 +447,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: widget.specialCharacterKeysContainerColor,
+              color: widget.actionKeysContainerColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(widget.keyCapBorderRadius),
               ),
@@ -476,7 +477,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           height: height / customLayoutKeys.activeLayout.defaultLayout.length,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: widget.specialCharacterKeysContainerColor,
+            color: widget.actionKeysContainerColor,
             borderRadius: BorderRadius.all(
               Radius.circular(widget.keyCapBorderRadius),
             ),
@@ -498,7 +499,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               height: height / customLayoutKeys.activeLayout.defaultLayout.length,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: widget.specialCharacterKeysContainerColor,
+                color: widget.actionKeysContainerColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.keyCapBorderRadius),
                 ),
@@ -534,7 +535,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: widget.specialCharacterKeysContainerColor,
+              color: widget.actionKeysContainerColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(widget.keyCapBorderRadius),
               ),

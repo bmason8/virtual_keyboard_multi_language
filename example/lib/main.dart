@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   rowVerticalPadding: 4.0,
                   usingSpecialCharactersRow: false,
                   specialCharactersRowColor: Colors.lightBlue,
-                  specialCharacterKeysContainerColor: Colors.lightBlue.shade900,
+                  actionKeysContainerColor: Colors.lightBlue.shade900,
                   textColor: Colors.white,
                   fontSize: 20,
                   shiftClickTextColor: Colors.white,

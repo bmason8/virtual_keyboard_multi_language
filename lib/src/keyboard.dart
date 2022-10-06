@@ -50,12 +50,6 @@ class VirtualKeyboard extends StatefulWidget {
   /// Shift click key (top right) padding while viewing keyboard in the default view
   final double shiftClickKeyPadding;
 
-  /// Color row behind
-  final Color specialCharactersRowColor;
-
-  /// Used to know if it should use the specialCharactersRowColor
-  final bool usingSpecialCharactersRow;
-
   /// the custom layout for multi or single language
   final VirtualKeyboardLayoutKeys? customLayoutKeys;
 
@@ -88,15 +82,13 @@ class VirtualKeyboard extends StatefulWidget {
       this.height = _virtualKeyboardDefaultHeight,
       this.rowVerticalPadding = 0.0,
       this.horizontalKeyPadding = 4.0,
-      this.usingSpecialCharactersRow = false,
-      this.specialCharactersRowColor = Colors.transparent,
       this.textColor = Colors.black,
       this.fontSize = 14,
       this.shiftClickTextColor = Colors.black,
       this.shiftClickFontSize = 10,
       this.keyContainerColor = Colors.transparent,
       this.actionKeysContainerColor = Colors.transparent,
-      this.keyCapBorderRadius = 10.0,
+      this.keyCapBorderRadius = 0.0,
       this.shiftClickKeyPadding = 6.0,
       this.alwaysCaps = false})
       : super(key: key);
@@ -165,9 +157,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   @override
   void didUpdateWidget(VirtualKeyboard oldWidget) {
     // Used to ensure the widget rebuilds correctly when dismissed while viewing special characters layout
-    if (oldWidget.usingSpecialCharactersRow) {
-      customLayoutKeys.switchToSpecialCharacters(false);
-    }
     super.didUpdateWidget(oldWidget);
     setState(() {
       type = widget.type;
@@ -273,7 +262,11 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       var items = List.generate(keyboardRows[rowNum].length, (int keyNum) {
         // Get the VirtualKeyboardKey object.
         VirtualKeyboardKey virtualKeyboardKey = keyboardRows[rowNum][keyNum];
-        VirtualKeyboardKey shiftClickKeyboardKey = specialCharacters[rowNum][keyNum];
+
+        VirtualKeyboardKey? shiftClickKeyboardKey;
+        if (keyNum < specialCharacters[rowNum].length) {
+          shiftClickKeyboardKey = specialCharacters[rowNum][keyNum];
+        }
 
         Widget keyWidget;
 
@@ -290,7 +283,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               break;
             case VirtualKeyboardKeyType.Action:
               // Draw action key.
-              keyWidget = _keyboardDefaultActionKey(virtualKeyboardKey);
+              keyWidget = _keyboardDefaultActionKey(virtualKeyboardKey, keyboardRows[rowNum].length, keyNum);
               break;
           }
         } else {
@@ -307,9 +300,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
       if (this.reverseLayout) items = items.reversed.toList();
       return Material(
-        color: (widget.usingSpecialCharactersRow && rowNum == 1 && keyboardRows.length > 5)
-            ? widget.specialCharactersRowColor
-            : Colors.transparent,
+        color: Colors.transparent,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: widget.rowVerticalPadding, horizontal: 1.0),
           // padding: (rowNum == 0 || rowNum == keyboardRows.length - 1)
@@ -333,7 +324,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   bool longPress = false;
 
   /// Creates default UI element for keyboard Key.
-  Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey secondaryKey, bool isNumeric) {
+  Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey? secondaryKey, bool isNumeric) {
     return Expanded(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: widget.horizontalKeyPadding, vertical: 0.0),
@@ -357,7 +348,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                   child: Padding(
                     padding: EdgeInsets.only(top: widget.shiftClickKeyPadding, right: widget.shiftClickKeyPadding),
                     child: Text(
-                      secondaryKey.text ?? '',
+                      secondaryKey?.text ?? '',
                       textAlign: TextAlign.center,
                       style: shiftClickTextStyle,
                     ),
@@ -401,7 +392,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   }
 
   /// Creates default UI element for keyboard Action Key.
-  Widget _keyboardDefaultActionKey(VirtualKeyboardKey key) {
+  Widget _keyboardDefaultActionKey(VirtualKeyboardKey key, int rowLength, int currentIndex) {
     // Holds the action key widget.
     Widget? actionKey;
 
@@ -428,7 +419,11 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             child: Container(
               // height: double.infinity,
               height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-              width: double.infinity,
+              // width: double.infinity,
+              // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3,
+              width: (rowLength < 9)
+                  ? (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1
+                  : (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
               decoration: BoxDecoration(
                 color: widget.actionKeysContainerColor,
                 borderRadius: BorderRadius.all(
@@ -444,7 +439,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       case VirtualKeyboardKeyAction.Shift:
         actionKey = Container(
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-            width: double.infinity,
+            width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.2,
+            // width: double.infinity,
             decoration: BoxDecoration(
               color: widget.actionKeysContainerColor,
               borderRadius: BorderRadius.all(
@@ -455,6 +451,24 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               Icons.arrow_upward,
               color: textColor,
             ));
+        break;
+      case VirtualKeyboardKeyAction.Return:
+        actionKey = Container(
+          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          // width: double.infinity,
+          width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1,
+          // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
+          decoration: BoxDecoration(
+            color: widget.actionKeysContainerColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(widget.keyCapBorderRadius),
+            ),
+          ),
+          child: Icon(
+            Icons.keyboard_return,
+            color: textColor,
+          ),
+        );
         break;
       case VirtualKeyboardKeyAction.Space:
         actionKey = actionKey = Container(
@@ -471,22 +485,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               color: textColor,
             ));
         break;
-      case VirtualKeyboardKeyAction.Return:
-        actionKey = Container(
-          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: widget.actionKeysContainerColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(widget.keyCapBorderRadius),
-            ),
-          ),
-          child: Icon(
-            Icons.keyboard_return,
-            color: textColor,
-          ),
-        );
-        break;
       case VirtualKeyboardKeyAction.SwitchLanguage:
         actionKey = GestureDetector(
             onTap: () {
@@ -496,6 +494,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
             },
             child: Container(
               height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+              // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) / 1.2,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: widget.actionKeysContainerColor,
@@ -505,14 +504,14 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               ),
               child: SizedBox(
                 width: 56,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.language,
-                      color: textColor,
-                    ),
+                    // Icon(
+                    //   Icons.language,
+                    //   color: textColor,
+                    // ),
                     Text(
                       _getCountryFlag(),
                       style: TextStyle(fontSize: 30),
@@ -526,8 +525,89 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         actionKey = GestureDetector(
           onTap: () {
             setState(() {
-              isSpecialCharactersEnabled = !isSpecialCharactersEnabled;
-              customLayoutKeys.switchToSpecialCharacters(isSpecialCharactersEnabled);
+              isSpecialCharactersEnabled = false;
+              customLayoutKeys.switchToSpecialCharacters();
+            });
+          },
+          child: Container(
+            height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
+            // width: double.infinity,
+            decoration: BoxDecoration(
+              color: widget.actionKeysContainerColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(widget.keyCapBorderRadius),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '?123',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: widget.shiftClickTextColor,
+                  fontSize: widget.fontSize,
+                  fontWeight: FontWeight.w600,
+                  // fontSize: shiftClickFontSize,
+                ),
+              ),
+            ),
+          ),
+        );
+        break;
+      case VirtualKeyboardKeyAction.SpacerBlock:
+        actionKey = Container(
+          height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+          // width: double.infinity,
+          width: (height / customLayoutKeys.activeLayout.defaultLayout.length) / 2,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(
+              Radius.circular(widget.keyCapBorderRadius),
+            ),
+          ),
+          child: Text(
+            '',
+          ),
+        );
+        break;
+      case VirtualKeyboardKeyAction.OtherSpecialCharacters:
+        actionKey = GestureDetector(
+          onTap: () {
+            setState(() {
+              isSpecialCharactersEnabled = true;
+              customLayoutKeys.switchToOtherSpecialCharacters();
+            });
+          },
+          child: Container(
+            height: height / customLayoutKeys.activeLayout.defaultLayout.length,
+            // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1,
+            // width: double.infinity,
+            width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
+            decoration: BoxDecoration(
+              color: widget.actionKeysContainerColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(widget.keyCapBorderRadius),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '=\\<',
+                style: TextStyle(
+                  color: widget.shiftClickTextColor,
+                  fontSize: widget.fontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        );
+        break;
+      case VirtualKeyboardKeyAction.ABC:
+        actionKey = GestureDetector(
+          onTap: () {
+            setState(() {
+              isSpecialCharactersEnabled = true;
+              customLayoutKeys.switchToABCCharacters();
             });
           },
           child: Container(
@@ -539,9 +619,16 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                 Radius.circular(widget.keyCapBorderRadius),
               ),
             ),
-            child: Icon(
-              Icons.emoji_symbols,
-              color: textColor,
+            child: Center(
+              child: Text(
+                'ABC',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: widget.shiftClickTextColor,
+                  fontSize: widget.fontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
         );
@@ -570,21 +657,37 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       ),
     );
 
-    if (key.action == VirtualKeyboardKeyAction.Space)
+    // Wrap the key wdgt with a different Widget based on what type of key it is
+    if (key.action == VirtualKeyboardKeyAction.Space) {
       return Flexible(flex: 4, child: wdgt);
-    // return Expanded(child: wdgt);
-    // return SizedBox(width: (width ?? MediaQuery.of(context).size.width) / 2, child: wdgt);
-    else
+      // return Expanded(child: wdgt);
+      // return SizedBox(width: (width ?? MediaQuery.of(context).size.width) / 2, child: wdgt);
+
+    } else if (key.action == VirtualKeyboardKeyAction.SpacerBlock) {
+      return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.Shift) {
+      return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.Return) {
+      return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.Backspace) {
+      return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.SpecialCharacters) {
+      return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.OtherSpecialCharacters) {
+      return wdgt;
+    } else {
       // return Flexible(child: wdgt);
       return Flexible(child: wdgt);
-    // return Flexible(
-    //     child: ConstrainedBox(
-    //   constraints: BoxConstraints(
-    //     // minWidth: 160,
-    //     maxWidth: 180,
-    //   ),
-    //   child: wdgt,
-    // ));
+      // return Flexible(
+      //     child: ConstrainedBox(
+      //   constraints: BoxConstraints(
+      //     // minWidth: 160,
+      //     maxWidth: 180,
+      //   ),
+      //   child: wdgt,
+      // ));
+
+    }
   }
 
   String _getCountryFlag() {

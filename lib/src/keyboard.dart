@@ -122,6 +122,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   // True if shift is enabled.
   bool isShiftEnabled = false;
   bool isSpecialCharactersEnabled = false;
+  bool isOtherSpecialCharactersEnabled = false;
 
   void _onKeyPress(VirtualKeyboardKey key) {
     if (key.keyType == VirtualKeyboardKeyType.String) {
@@ -342,7 +343,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           ),
           child: Stack(
             children: [
-              if (!isSpecialCharactersEnabled && !isNumeric)
+              if (!isSpecialCharactersEnabled && !isOtherSpecialCharactersEnabled && !isNumeric)
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
@@ -525,7 +526,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         actionKey = GestureDetector(
           onTap: () {
             setState(() {
-              isSpecialCharactersEnabled = false;
+              isSpecialCharactersEnabled = true;
+              isOtherSpecialCharactersEnabled = false;
               customLayoutKeys.switchToSpecialCharacters();
             });
           },
@@ -574,7 +576,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         actionKey = GestureDetector(
           onTap: () {
             setState(() {
-              isSpecialCharactersEnabled = true;
+              isSpecialCharactersEnabled = false;
+              isOtherSpecialCharactersEnabled = true;
               customLayoutKeys.switchToOtherSpecialCharacters();
             });
           },
@@ -606,7 +609,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         actionKey = GestureDetector(
           onTap: () {
             setState(() {
-              isSpecialCharactersEnabled = true;
+              isSpecialCharactersEnabled = false;
+              isOtherSpecialCharactersEnabled = false;
               customLayoutKeys.switchToABCCharacters();
             });
           },

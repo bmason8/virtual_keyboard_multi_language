@@ -221,7 +221,7 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
     if (additionalKeysLength > 9) {
       return 3.9;
     } else if (additionalKeysLength > 7) {
-      return 2.8;
+      return 2.9;
     } else if (additionalKeysLength > 6) {
       return 2;
     } else if (additionalKeysLength > 4) {

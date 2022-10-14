@@ -158,12 +158,17 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
 
   _insertOverlay() {
     final overlay = Overlay.of(context)!;
-    if (entry != null) {
-      overlay.insert(entry!);
-    } else {
-      _buildOverlay();
-      overlay.insert(entry!);
-    }
+    entry = null;
+    _buildOverlay();
+    overlay.insert(entry!);
+    // if (entry != null) {
+    //   entry = null;
+    //   _buildOverlay();
+    //   overlay.insert(entry!);
+    // } else {
+    //   _buildOverlay();
+    //   overlay.insert(entry!);
+    // }
   }
 
   _buildOverlay() {

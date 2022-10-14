@@ -158,17 +158,10 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
 
   _insertOverlay() {
     final overlay = Overlay.of(context)!;
+    // important to nullify entry and rebuild the overlay because the global positions won't get reset when changing languages
     entry = null;
     _buildOverlay();
     overlay.insert(entry!);
-    // if (entry != null) {
-    //   entry = null;
-    //   _buildOverlay();
-    //   overlay.insert(entry!);
-    // } else {
-    //   _buildOverlay();
-    //   overlay.insert(entry!);
-    // }
   }
 
   _buildOverlay() {
@@ -184,7 +177,6 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
               left: (additionalKeys.length > 1) ? offset.dx - 24 : offset.dx,
               child: GestureDetector(
                 child: Card(
-                  // color: widget.keyContainerColor,
                   color: widget.longPressOverlayContainerColor ?? widget.keyContainerColor,
                   elevation: 10,
                   child: ConstrainedBox(
@@ -227,7 +219,7 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
 
   double _calculateOffsetAdjustment(int additionalKeysLength) {
     if (additionalKeysLength > 9) {
-      return 3.8;
+      return 3.9;
     } else if (additionalKeysLength > 7) {
       return 2.8;
     } else if (additionalKeysLength > 6) {

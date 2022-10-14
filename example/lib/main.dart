@@ -54,11 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               text,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.headline4,
             ),
             Text(
               _controllerText.text,
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.red, fontSize: 22),
             ),
             SwitchListTile(
               title: Text(

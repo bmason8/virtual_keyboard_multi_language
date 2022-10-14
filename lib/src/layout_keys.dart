@@ -43,13 +43,14 @@ abstract class VirtualKeyboardLayoutKeys {
         _germanKeyboardLayout = KeyboardLanguage(germanSpecialCharactersLayout, germanDefaultLayout, germanOtherSpecialCharactersLayout);
         break;
       case 2:
-        _spanishKeyboardLayout = KeyboardLanguage(_spanishSpecialCharactersLayout, _spanishDefaultLayout, []);
+        _spanishKeyboardLayout =
+            KeyboardLanguage(spanishSpecialCharactersLayout, spanishDefaultLayout, spanishOtherSpecialCharactersLayout);
         break;
       case 3:
-        _frenchKeyboardLayout = KeyboardLanguage(_frenchSpecialCharactersLayout, _frenchDefaultLayout, []);
+        _frenchKeyboardLayout = KeyboardLanguage(frenchSpecialCharactersLayout, frenchDefaultLayout, frenchOtherSpecialCharactersLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(_portugueseSpecialCharactersLayout, _portugueseDefaultLayout, []);
+        _portugueseKeyboardLayout = KeyboardLanguage(portugueseSpecialCharactersLayout, portugueseDefaultLayout, []);
         break;
     }
   }
@@ -65,13 +66,14 @@ abstract class VirtualKeyboardLayoutKeys {
         _germanKeyboardLayout = KeyboardLanguage(germanDefaultLayout, germanSpecialCharactersLayout, germanOtherSpecialCharactersLayout);
         break;
       case 2:
-        _spanishKeyboardLayout = KeyboardLanguage(_spanishDefaultLayout, _spanishSpecialCharactersLayout, []);
+        _spanishKeyboardLayout =
+            KeyboardLanguage(spanishDefaultLayout, spanishSpecialCharactersLayout, spanishOtherSpecialCharactersLayout);
         break;
       case 3:
-        _frenchKeyboardLayout = KeyboardLanguage(_frenchDefaultLayout, _frenchSpecialCharactersLayout, []);
+        _frenchKeyboardLayout = KeyboardLanguage(frenchDefaultLayout, frenchSpecialCharactersLayout, frenchOtherSpecialCharactersLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(_portugueseDefaultLayout, _portugueseSpecialCharactersLayout, []);
+        _portugueseKeyboardLayout = KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, []);
         break;
     }
   }
@@ -128,13 +130,14 @@ abstract class VirtualKeyboardLayoutKeys {
         _germanKeyboardLayout = KeyboardLanguage(germanOtherSpecialCharactersLayout, germanSpecialCharactersLayout, germanDefaultLayout);
         break;
       case 2:
-        _spanishKeyboardLayout = KeyboardLanguage(_spanishSpecialCharactersLayout, _spanishDefaultLayout, []);
+        _spanishKeyboardLayout =
+            KeyboardLanguage(spanishOtherSpecialCharactersLayout, spanishSpecialCharactersLayout, spanishDefaultLayout);
         break;
       case 3:
-        _frenchKeyboardLayout = KeyboardLanguage(_frenchSpecialCharactersLayout, _frenchDefaultLayout, []);
+        _frenchKeyboardLayout = KeyboardLanguage(frenchOtherSpecialCharactersLayout, frenchSpecialCharactersLayout, frenchDefaultLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(_portugueseSpecialCharactersLayout, _portugueseDefaultLayout, []);
+        _portugueseKeyboardLayout = KeyboardLanguage(portugueseSpecialCharactersLayout, portugueseDefaultLayout, []);
         break;
     }
   }
@@ -178,226 +181,6 @@ KeyboardLanguage _englishKeyboardLayout =
     KeyboardLanguage(englishDefaultLayout, englishSpecialCharactersLayout, englishOtherSpecialCharactersLayout);
 KeyboardLanguage _germanKeyboardLayout =
     KeyboardLanguage(germanDefaultLayout, germanSpecialCharactersLayout, germanOtherSpecialCharactersLayout);
-KeyboardLanguage _spanishKeyboardLayout = KeyboardLanguage(_spanishDefaultLayout, _spanishSpecialCharactersLayout, []);
-KeyboardLanguage _frenchKeyboardLayout = KeyboardLanguage(_frenchDefaultLayout, _frenchSpecialCharactersLayout, []);
-KeyboardLanguage _portugueseKeyboardLayout = KeyboardLanguage(_portugueseDefaultLayout, _portugueseSpecialCharactersLayout, []);
-// KeyboardLanguage _italianKeyboardLayout = KeyboardLanguage(_italianDefaultLayout, _italianSpecialCharactersLayout);
-
-// const List<List<List>> _defaultEnglishLayout = [
-//   // Row 1
-//   const [
-//     ['1', 'è'],
-//     ['2', 'ù'],
-//     ['3'],
-//     ['4'],
-//     ['5'],
-//     ['6'],
-//     ['7'],
-//     ['8'],
-//     ['9'],
-//     ['0'],
-//   ],
-//   // // Row 2
-//   // const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', VirtualKeyboardKeyAction.Backspace],
-//   // // Row 3
-//   // const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
-//   // // Row 4
-//   // const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.Shift],
-//   // // Row 5
-//   // const [
-//   //   VirtualKeyboardKeyAction.SwitchLanguage,
-//   //   '@',
-//   //   VirtualKeyboardKeyAction.Space,
-//   //   '&',
-//   //   '_',
-//   // ]
-// ];
-/// Keys for Virtual Keyboard's rows.
-/// ALL CHARACTERS AND NO SPECIAL CHARACTERS BUTTON
-// const List<List> _englishDefaultLayout = [
-//   // Row 1
-//   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-//   // English specific characters
-//   const ['!', '@', '#', '\$', '%', '^', '&', '*', '(', ')', '-', '+'],
-//   // Row 2
-//   const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', VirtualKeyboardKeyAction.Backspace],
-//   // Row 3
-//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', VirtualKeyboardKeyAction.Return],
-//   // Row 4
-//   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
-//   // Row 5
-//   const [
-//     VirtualKeyboardKeyAction.SwitchLanguage,
-//     '@',
-//     VirtualKeyboardKeyAction.Space,
-//     '_',
-//     VirtualKeyboardKeyAction.SpecialCharacters,
-//   ]
-// ];
-
-/// SPANISH KEYBOARD LAYOUTS
-const List<List> _spanishDefaultLayout = [
-  // Row 1
-  // TODO: THIS o isn't correct
-  const ['Ọ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '¿'],
-  // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '`', '+', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', ',', 'ç', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-const List<List> _spanishSpecialCharactersLayout = [
-  // Row 1
-  const ['a', '!', '"', '·', '\$', '%', '&', '/', '(', ')', '=', '?', '¡'],
-  // Row 2
-  const ['\\', '|', '€', '@', '#', '', '', '', '[', ']', '^', '*', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const ['', '', '', '', '', '', '', '', '', '¨', '{', '}', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', ';', ':', '_', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-
-/// FRENCH KEYBOARD LAYOUTS
-const List<List> _frenchDefaultLayout = [
-  // Row 1
-  const ['#', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '°', '_'],
-  // Row 2
-  const ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^', '\$', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù', '\`', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '=', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-const List<List> _frenchSpecialCharactersLayout = [
-  // Row 1
-  // French specific characters
-  const ['@', '&', 'é', '"', '\'', '(', '§', 'è', '!', 'ç', 'à', ')', '-'],
-  // Row 2
-  const [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '€', '¨', '*', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '%', '£', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, '<', '>', ' ', ' ', ' ', ' ', '?', '.', '/', '+', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-
-/// PORTUGUESE KEYBOARD LAYOUTS
-// TODO: THE o and a beside 'p' aren't correct
-const List<List> _portugueseDefaultLayout = [
-  // Row 1
-  const ['§', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '+'],
-  // Row 2
-  const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'õ', ',', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ç', '~', '\\', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-
-const List<List> _portugueseSpecialCharactersLayout = [
-  // Row 1
-  const ['±', '!', '"', '#', '\$', '%', '&', '/', '(', ')', '=', '?', '*'],
-  // Row 2
-  const ['', '', '', '', '', '', '', '', '', '', 'ã', '`', VirtualKeyboardKeyAction.Backspace],
-  // Row 3
-  const ['', '', '', '', '', '', '', '', '', '', '^', '|', VirtualKeyboardKeyAction.Return],
-  // Row 4
-  const [VirtualKeyboardKeyAction.Shift, '<', '>', '', '', '', '', '', ';', ':', '_', VirtualKeyboardKeyAction.SpecialCharacters],
-  // Row 5
-  const [
-    VirtualKeyboardKeyAction.SwitchLanguage,
-    VirtualKeyboardKeyAction.Space,
-    '',
-  ]
-];
-
-/// ITALIAN KEYBOARD LAYOUTS
-// const List<List> _italianDefaultLayout = [
-//   // Row 1
-//   const [
-//     '1',
-//     '2',
-//     '3',
-//     '4',
-//     '5',
-//     '6',
-//     '7',
-//     '8',
-//     '9',
-//     '0',
-//   ],
-//   // Row 2
-//   const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'è', VirtualKeyboardKeyAction.Backspace],
-//   // Row 3
-//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ò', 'à', 'ù', ';', '\'', VirtualKeyboardKeyAction.Return],
-//   // Row 4
-//   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
-//   // Row 5
-//   const [
-//     VirtualKeyboardKeyAction.SwitchLanguage,
-//     '@',
-//     VirtualKeyboardKeyAction.Space,
-//     '&',
-//     '_',
-//   ]
-// ];
-//
-// const List<List> _italianSpecialCharactersLayout = [
-//   // Row 1
-//   const [
-//     '1',
-//     '2',
-//     '3',
-//     '4',
-//     '5',
-//     '6',
-//     '7',
-//     '8',
-//     '9',
-//     '0',
-//   ],
-//   // Row 2
-//   const ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'é', VirtualKeyboardKeyAction.Backspace],
-//   // Row 3
-//   const ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ç', 'à', '§', ';', '\'', VirtualKeyboardKeyAction.Return],
-//   // Row 4
-//   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', VirtualKeyboardKeyAction.SpecialCharacters],
-//   // Row 5
-//   const [
-//     VirtualKeyboardKeyAction.SwitchLanguage,
-//     '@',
-//     VirtualKeyboardKeyAction.Space,
-//     '&',
-//     '_',
-//   ]
-// ];
+KeyboardLanguage _spanishKeyboardLayout = KeyboardLanguage(spanishDefaultLayout, spanishSpecialCharactersLayout, []);
+KeyboardLanguage _frenchKeyboardLayout = KeyboardLanguage(frenchDefaultLayout, frenchSpecialCharactersLayout, []);
+KeyboardLanguage _portugueseKeyboardLayout = KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, []);

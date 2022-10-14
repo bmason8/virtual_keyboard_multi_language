@@ -18,7 +18,7 @@ const List<List> portugueseDefaultLayout = [
     'k',
     'l',
     'ḉ',
-    VirtualKeyboardKeyAction.SmallSpacerBlock,
+    VirtualKeyboardKeyAction.SmallSpacerBlock
   ],
   // Row 3
   const [VirtualKeyboardKeyAction.Shift, 'z', 'x', 'c', 'v', 'b', 'n', 'm', VirtualKeyboardKeyAction.Backspace],
@@ -37,7 +37,7 @@ const List<List> portugueseSpecialCharactersLayout = [
   // Row 1
   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
   // Row 2
-  const ['@', '#', '€', '_', '&', '-', '+', '(', ')', '/'],
+  const [VirtualKeyboardKeyAction.Empty, '@', '#', '€', '_', '&', '-', '+', '(', ')', '/'],
   // Row 3
   const [VirtualKeyboardKeyAction.OtherSpecialCharacters, '*', '"', '\'', ':', ';', '!', '?', VirtualKeyboardKeyAction.Backspace],
   // Row 4

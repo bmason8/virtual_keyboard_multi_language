@@ -12,4 +12,5 @@ enum VirtualKeyboardKeyAction {
   OtherSpecialCharacters,
   SpacerBlock,
   SmallSpacerBlock,
+  Empty,
 }

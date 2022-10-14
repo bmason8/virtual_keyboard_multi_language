@@ -4,22 +4,11 @@ part of virtual_keyboard_multi_language;
 abstract class VirtualKeyboardLayoutKeys {
   int activeIndex = 0;
 
-  // List<List> get defaultEnglishLayout => _defaultEnglishLayout;
-  // // List<List> get defaultArabicLayout => _defaultArabicLayout;
-  // List<List> get defaultItalianLayout => _defaultItalianLayout;
-
-  // List<List> get activeLayout => getLanguage(activeIndex);
-  // int getLanguagesCount();
-  // List<List> getLanguage(int index);
-
-  // List<List> getLanguage(int index);
-
   KeyboardLanguage get defaultEnglishLayout => _englishKeyboardLayout;
   KeyboardLanguage get defaultGermanLayout => _germanKeyboardLayout;
   KeyboardLanguage get defaultSpanishLayout => _spanishKeyboardLayout;
   KeyboardLanguage get defaultFrenchLayout => _frenchKeyboardLayout;
   KeyboardLanguage get defaultPortugueseLayout => _portugueseKeyboardLayout;
-  // KeyboardLanguage get defaultItalianLayout => _italianKeyboardLayout;
 
   KeyboardLanguage get activeLayout => getLanguage(activeIndex);
   int getLanguagesCount();
@@ -35,7 +24,6 @@ abstract class VirtualKeyboardLayoutKeys {
   void switchToSpecialCharacters() {
     switch (activeIndex) {
       case 0:
-        // break;
         _englishKeyboardLayout =
             KeyboardLanguage(englishSpecialCharactersLayout, englishDefaultLayout, englishOtherSpecialCharactersLayout);
         break;
@@ -50,7 +38,8 @@ abstract class VirtualKeyboardLayoutKeys {
         _frenchKeyboardLayout = KeyboardLanguage(frenchSpecialCharactersLayout, frenchDefaultLayout, frenchOtherSpecialCharactersLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(portugueseSpecialCharactersLayout, portugueseDefaultLayout, []);
+        _portugueseKeyboardLayout =
+            KeyboardLanguage(portugueseSpecialCharactersLayout, portugueseDefaultLayout, portugueseOtherSpecialCharactersLayout);
         break;
     }
   }
@@ -73,51 +62,11 @@ abstract class VirtualKeyboardLayoutKeys {
         _frenchKeyboardLayout = KeyboardLanguage(frenchDefaultLayout, frenchSpecialCharactersLayout, frenchOtherSpecialCharactersLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, []);
+        _portugueseKeyboardLayout =
+            KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, portugueseOtherSpecialCharactersLayout);
         break;
     }
   }
-
-  // void switchToSpecialCharacters(bool currentUsingDefaultLayout) {
-  //   switch (activeIndex) {
-  //     case 0:
-  //       // break;
-  //       if (currentUsingDefaultLayout) {
-  //         _englishKeyboardLayout = KeyboardLanguage(englishSpecialCharactersLayout, englishDefaultLayout, []);
-  //       } else {
-  //         _englishKeyboardLayout = KeyboardLanguage(englishDefaultLayout, englishSpecialCharactersLayout, []);
-  //       }
-  //       break;
-  //     case 1:
-  //       if (currentUsingDefaultLayout) {
-  //         _germanKeyboardLayout = KeyboardLanguage(germanSpecialCharactersLayout, germanDefaultLayout, []);
-  //       } else {
-  //         _germanKeyboardLayout = KeyboardLanguage(germanDefaultLayout, germanSpecialCharactersLayout, []);
-  //       }
-  //       break;
-  //     case 2:
-  //       if (currentUsingDefaultLayout) {
-  //         _spanishKeyboardLayout = KeyboardLanguage(_spanishSpecialCharactersLayout, _spanishDefaultLayout, []);
-  //       } else {
-  //         _spanishKeyboardLayout = KeyboardLanguage(_spanishDefaultLayout, _spanishSpecialCharactersLayout, []);
-  //       }
-  //       break;
-  //     case 3:
-  //       if (currentUsingDefaultLayout) {
-  //         _frenchKeyboardLayout = KeyboardLanguage(_frenchSpecialCharactersLayout, _frenchDefaultLayout, []);
-  //       } else {
-  //         _frenchKeyboardLayout = KeyboardLanguage(_frenchDefaultLayout, _frenchSpecialCharactersLayout, []);
-  //       }
-  //       break;
-  //     case 4:
-  //       if (currentUsingDefaultLayout) {
-  //         _portugueseKeyboardLayout = KeyboardLanguage(_portugueseSpecialCharactersLayout, _portugueseDefaultLayout, []);
-  //       } else {
-  //         _portugueseKeyboardLayout = KeyboardLanguage(_portugueseDefaultLayout, _portugueseSpecialCharactersLayout, []);
-  //       }
-  //       break;
-  //   }
-  // }
 
   void switchToOtherSpecialCharacters() {
     switch (activeIndex) {
@@ -137,7 +86,8 @@ abstract class VirtualKeyboardLayoutKeys {
         _frenchKeyboardLayout = KeyboardLanguage(frenchOtherSpecialCharactersLayout, frenchSpecialCharactersLayout, frenchDefaultLayout);
         break;
       case 4:
-        _portugueseKeyboardLayout = KeyboardLanguage(portugueseSpecialCharactersLayout, portugueseDefaultLayout, []);
+        _portugueseKeyboardLayout =
+            KeyboardLanguage(portugueseOtherSpecialCharactersLayout, portugueseSpecialCharactersLayout, portugueseDefaultLayout);
         break;
     }
   }
@@ -149,16 +99,6 @@ class VirtualKeyboardDefaultLayoutKeys extends VirtualKeyboardLayoutKeys {
 
   int getLanguagesCount() => defaultLayouts.length;
 
-  // List<List> getLanguage(int index) {
-  //   switch (defaultLayouts[index]) {
-  //     case VirtualKeyboardDefaultLayouts.English:
-  //       return _defaultEnglishLayout;
-  //     case VirtualKeyboardDefaultLayouts.Italian:
-  //       return _defaultItalianLayout;
-  //     default:
-  //   }
-  //   return _defaultEnglishLayout;
-  // }
   KeyboardLanguage getLanguage(int index) {
     switch (defaultLayouts[index]) {
       case VirtualKeyboardDefaultLayouts.English:
@@ -181,6 +121,9 @@ KeyboardLanguage _englishKeyboardLayout =
     KeyboardLanguage(englishDefaultLayout, englishSpecialCharactersLayout, englishOtherSpecialCharactersLayout);
 KeyboardLanguage _germanKeyboardLayout =
     KeyboardLanguage(germanDefaultLayout, germanSpecialCharactersLayout, germanOtherSpecialCharactersLayout);
-KeyboardLanguage _spanishKeyboardLayout = KeyboardLanguage(spanishDefaultLayout, spanishSpecialCharactersLayout, []);
-KeyboardLanguage _frenchKeyboardLayout = KeyboardLanguage(frenchDefaultLayout, frenchSpecialCharactersLayout, []);
-KeyboardLanguage _portugueseKeyboardLayout = KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, []);
+KeyboardLanguage _spanishKeyboardLayout =
+    KeyboardLanguage(spanishDefaultLayout, spanishSpecialCharactersLayout, spanishOtherSpecialCharactersLayout);
+KeyboardLanguage _frenchKeyboardLayout =
+    KeyboardLanguage(frenchDefaultLayout, frenchSpecialCharactersLayout, frenchOtherSpecialCharactersLayout);
+KeyboardLanguage _portugueseKeyboardLayout =
+    KeyboardLanguage(portugueseDefaultLayout, portugueseSpecialCharactersLayout, portugueseOtherSpecialCharactersLayout);

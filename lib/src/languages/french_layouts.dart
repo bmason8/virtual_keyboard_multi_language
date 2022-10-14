@@ -20,7 +20,7 @@ const List<List> frenchDefaultLayout = [
     VirtualKeyboardKeyAction.SmallSpacerBlock
   ],
   // Row 3
-  const [VirtualKeyboardKeyAction.Shift, 'w', 'x', 'c', 'v', 'b', 'n', 'n', '\'', VirtualKeyboardKeyAction.Backspace],
+  const [VirtualKeyboardKeyAction.Shift, 'w', 'x', 'c', 'v', 'b', 'n', '\'', VirtualKeyboardKeyAction.Backspace],
   // Row 4
   const [
     VirtualKeyboardKeyAction.SpecialCharacters,
@@ -36,7 +36,7 @@ const List<List> frenchSpecialCharactersLayout = [
   // Row 1
   const ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
   // Row 2
-  const ['@', '#', '€', '_', '&', '-', '+', '(', ')', '/'],
+  const [VirtualKeyboardKeyAction.Empty, '@', '#', '€', '_', '&', '-', '+', '(', ')', '/'],
   // Row 3
   const [VirtualKeyboardKeyAction.OtherSpecialCharacters, '*', '"', '\'', ':', ';', '!', '?', VirtualKeyboardKeyAction.Backspace],
   // Row 4

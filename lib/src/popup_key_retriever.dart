@@ -1,25 +1,36 @@
-import 'package:flutter/material.dart';
 import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.dart';
 
 /// Get additional related symbols for a given keyboard letter
 class PopupKeyRetriever {
-  PopupKeyRetriever({required this.virtualKeyboardKey});
+  PopupKeyRetriever({required this.includeSecondaryKey});
 
-  final VirtualKeyboardKey virtualKeyboardKey;
+  final bool includeSecondaryKey;
 
-  List<VirtualKeyboardKey> getAdditionalRelatedSymbols(String symbol) {
+  List<VirtualKeyboardKey> getAdditionalRelatedSymbols(String symbol, VirtualKeyboardKey? secondaryKey) {
+    final List<VirtualKeyboardKey> keyList = [];
+    // check if the map contains the symbol
     if (symbolsMap.containsKey(symbol)) {
       final result = symbolsMap.entries.firstWhere((element) => element.key == symbol);
-      return result.value;
+      // assign the values to the temporary list (keyList)
+      for (VirtualKeyboardKey vk in result.value) {
+        keyList.add(vk);
+      }
+      // add the secondary symbol to the results if 'includeSecondaryKey' is enabled
+      if (includeSecondaryKey && !result.value.contains(secondaryKey) && secondaryKey != null) {
+        keyList.add(secondaryKey);
+      }
+      return keyList;
     } else {
+      // return an empty list if the map does not contain the symbol
       return [];
     }
   }
 
-  Map<String, List<VirtualKeyboardKey>> symbolsMap = {
+  final Map<String, List<VirtualKeyboardKey>> symbolsMap = {
     'a': aSymbols,
     'b': bSymbols,
     'c': cSymbols,
+    'ç': specialCSymbols,
     'd': dSymbols,
     'e': eSymbols,
     'f': fSymbols,
@@ -28,10 +39,12 @@ class PopupKeyRetriever {
     'i': iSymbols,
     'j': jSymbols,
     'k': kSymbols,
-    'l': kSymbols,
+    'l': lSymbols,
     'm': mSymbols,
     'n': nSymbols,
+    'ñ': specialNSymbols,
     'o': oSymbols,
+    'ö': oUmlotSymbols,
     'p': pSymbols,
     'q': qSymbols,
     'r': rSymbols,
@@ -67,6 +80,14 @@ final List<VirtualKeyboardKey> cSymbols = [
   VirtualKeyboardKey(text: 'ç', capsText: 'Ç', keyType: VirtualKeyboardKeyType.String),
 ];
 
+final List<VirtualKeyboardKey> specialCSymbols = [
+  VirtualKeyboardKey(text: 'ć', capsText: 'Ć', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'č', capsText: 'Č', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ĉ', capsText: 'Ĉ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ċ', capsText: 'Ċ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ç', capsText: 'Ç', keyType: VirtualKeyboardKeyType.String),
+];
+
 final List<VirtualKeyboardKey> dSymbols = [];
 
 final List<VirtualKeyboardKey> eSymbols = [
@@ -83,9 +104,9 @@ final List<VirtualKeyboardKey> fSymbols = [];
 final List<VirtualKeyboardKey> gSymbols = [];
 final List<VirtualKeyboardKey> hSymbols = [];
 final List<VirtualKeyboardKey> iSymbols = [
+  VirtualKeyboardKey(text: 'į', capsText: 'Į', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'ī', capsText: 'Ī', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'ï', capsText: 'Ï', keyType: VirtualKeyboardKeyType.String),
-  VirtualKeyboardKey(text: 'į', capsText: 'Į', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'ì', capsText: 'Ì', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'î', capsText: 'Î', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'í', capsText: 'Í', keyType: VirtualKeyboardKeyType.String),
@@ -100,7 +121,24 @@ final List<VirtualKeyboardKey> nSymbols = [
   VirtualKeyboardKey(text: 'ǹ', capsText: 'Ǹ', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'ň', capsText: 'Ň', keyType: VirtualKeyboardKeyType.String),
 ];
+final List<VirtualKeyboardKey> specialNSymbols = [
+  VirtualKeyboardKey(text: 'ñ', capsText: 'Ñ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ń', capsText: 'Ń', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ǹ', capsText: 'Ǹ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ň', capsText: 'Ň', keyType: VirtualKeyboardKeyType.String),
+];
 final List<VirtualKeyboardKey> oSymbols = [
+  VirtualKeyboardKey(text: 'œ', capsText: 'Œ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ø', capsText: 'Ø', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'º', capsText: 'ᴼ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ō', capsText: 'Ō', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ö', capsText: 'Ö', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ò', capsText: 'Ò', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ô', capsText: 'Ô', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'õ', capsText: 'Õ', keyType: VirtualKeyboardKeyType.String),
+  VirtualKeyboardKey(text: 'ó', capsText: 'Ó', keyType: VirtualKeyboardKeyType.String),
+];
+final List<VirtualKeyboardKey> oUmlotSymbols = [
   VirtualKeyboardKey(text: 'œ', capsText: 'Œ', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'ø', capsText: 'Ø', keyType: VirtualKeyboardKeyType.String),
   VirtualKeyboardKey(text: 'º', capsText: 'ᴼ', keyType: VirtualKeyboardKeyType.String),

@@ -6,14 +6,14 @@ class PopupVirtualKey extends StatelessWidget {
     Key? key,
     required this.virtualKeyboardKey,
     required this.textStyle,
-    required this.keyContainerColor,
+    this.keyContainerColor,
     required this.isShiftEnabled,
     required this.onKeyPress,
   }) : super(key: key);
 
   final VirtualKeyboardKey virtualKeyboardKey;
   final TextStyle textStyle;
-  final Color keyContainerColor;
+  final Color? keyContainerColor;
   final bool isShiftEnabled;
   final Function onKeyPress;
 

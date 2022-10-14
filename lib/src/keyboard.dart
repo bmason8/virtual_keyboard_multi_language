@@ -44,6 +44,11 @@ class VirtualKeyboard extends StatefulWidget {
   /// Color of the Special Character keys
   final Color actionKeysContainerColor;
 
+  /// Color of the overlay container widget (when long press/drag selecting a related additional character)
+  final Color? longPressOverlayContainerColor;
+
+  final Color? longPressOverlayKeyContainerColor;
+
   /// Border Radius for key caps
   final double keyCapBorderRadius;
 
@@ -62,36 +67,42 @@ class VirtualKeyboard extends StatefulWidget {
   /// Set to true if you want only to show Caps letters.
   final bool alwaysCaps;
 
-  /// inverse the layout to fix the issues with right to left languages.
+  /// Inverse the layout to fix the issues with right to left languages.
   final bool reverseLayout;
+
+  /// Setting to true will add the secondary character as an option in the long press overlay when selecting additional related characters for a given key (ie holding down 'a' will show 'à, ä, etc' as well as '@').
+  final bool includeSecondaryKeyInPopup;
 
   /// used for multi-languages with default layouts, the default is English only
   /// will be ignored if customLayoutKeys is not null
   final List<VirtualKeyboardDefaultLayouts>? defaultLayouts;
 
-  VirtualKeyboard(
-      {Key? key,
-      required this.type,
-      this.onKeyPress,
-      this.builder,
-      this.width,
-      this.defaultLayouts,
-      this.customLayoutKeys,
-      this.textController,
-      this.reverseLayout = false,
-      this.height = _virtualKeyboardDefaultHeight,
-      this.rowVerticalPadding = 0.0,
-      this.horizontalKeyPadding = 4.0,
-      this.textColor = Colors.black,
-      this.fontSize = 14,
-      this.shiftClickTextColor = Colors.black,
-      this.shiftClickFontSize = 10,
-      this.keyContainerColor = Colors.transparent,
-      this.actionKeysContainerColor = Colors.transparent,
-      this.keyCapBorderRadius = 0.0,
-      this.shiftClickKeyPadding = 6.0,
-      this.alwaysCaps = false})
-      : super(key: key);
+  VirtualKeyboard({
+    Key? key,
+    required this.type,
+    this.onKeyPress,
+    this.builder,
+    this.width,
+    this.defaultLayouts,
+    this.customLayoutKeys,
+    this.textController,
+    this.reverseLayout = false,
+    this.height = _virtualKeyboardDefaultHeight,
+    this.rowVerticalPadding = 0.0,
+    this.horizontalKeyPadding = 4.0,
+    this.textColor = Colors.black,
+    this.fontSize = 14,
+    this.shiftClickTextColor = Colors.black,
+    this.shiftClickFontSize = 10,
+    this.keyContainerColor = Colors.transparent,
+    this.longPressOverlayContainerColor,
+    this.longPressOverlayKeyContainerColor,
+    this.actionKeysContainerColor = Colors.transparent,
+    this.keyCapBorderRadius = 0.0,
+    this.shiftClickKeyPadding = 6.0,
+    this.alwaysCaps = false,
+    this.includeSecondaryKeyInPopup = true,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -224,10 +235,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
 
   Widget _alphanumeric() {
     int numberOfRows = _getKeyboardRows(customLayoutKeys, false).length;
-    // print('numberOfRows: $numberOfRows');
-    // print('rowPadding: ${widget.rowVerticalPadding}');
-    // double testHeight = (widget.rowVerticalPadding * numberOfRows);
-    // print('height: ${testHeight + height}');
     return Container(
       height: height + ((widget.rowVerticalPadding + 4) * numberOfRows),
       // height: height,
@@ -241,8 +248,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   }
 
   Widget _numeric() {
+    int numberOfRows = _getKeyboardRows(customLayoutKeys, false).length;
     return Container(
-      height: height,
+      height: height + ((widget.rowVerticalPadding + 4) * numberOfRows),
+      // height: height,
       width: width ?? MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -287,7 +296,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               break;
             case VirtualKeyboardKeyType.Action:
               // Draw action key.
-              keyWidget = _keyboardDefaultActionKey(virtualKeyboardKey, keyboardRows[rowNum].length, keyNum);
+              keyWidget = _keyboardDefaultActionKey(virtualKeyboardKey, keyboardRows[rowNum].length, keyNum, type);
               break;
           }
         } else {
@@ -330,6 +339,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   /// Creates default UI element for keyboard Key.
   Widget _keyboardDefaultKey(VirtualKeyboardKey key, VirtualKeyboardKey? secondaryKey, bool isNumeric) {
     return KeyboardDefaultKeyWidget(
+      key: ValueKey<String>('${key.text}'),
       virtualKey: key,
       secondaryVirtualKey: secondaryKey,
       customLayoutKeys: customLayoutKeys,
@@ -339,60 +349,17 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       alwaysCaps: alwaysCaps,
       isSpecialCharactersEnabled: isSpecialCharactersEnabled,
       isOtherSpecialCharactersEnabled: isOtherSpecialCharactersEnabled,
+      includeSecondaryKeyInPopup: widget.includeSecondaryKeyInPopup,
       keyCapBorderRadius: widget.keyCapBorderRadius,
       horizontalKeyPadding: widget.horizontalKeyPadding,
       shiftClickKeyPadding: widget.shiftClickKeyPadding,
       keyContainerColor: widget.keyContainerColor,
+      longPressOverlayContainerColor: widget.longPressOverlayContainerColor,
+      longPressOverlayKeyContainerColor: widget.longPressOverlayKeyContainerColor,
       onKeyPress: _onKeyPress,
       textStyle: textStyle,
       shiftClickTextStyle: shiftClickTextStyle,
     );
-
-    // return Expanded(
-    //     child: Padding(
-    //   padding: EdgeInsets.symmetric(horizontal: widget.horizontalKeyPadding, vertical: 0.0),
-    //   child: InkWell(
-    //     onTap: () {
-    //       _onKeyPress(key);
-    //     },
-    //     // onLongPress: () {
-    //     //   final overlay = Overlay.of(context)!;
-    //     //   overlay.insert(entry);
-    //     // },
-    //     child: Container(
-    //       height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-    //       decoration: BoxDecoration(
-    //         color: widget.keyContainerColor,
-    //         borderRadius: BorderRadius.all(
-    //           Radius.circular(widget.keyCapBorderRadius),
-    //         ),
-    //       ),
-    //       child: Stack(
-    //         children: [
-    //           if (!isSpecialCharactersEnabled && !isOtherSpecialCharactersEnabled && !isNumeric)
-    //             Align(
-    //               alignment: Alignment.topRight,
-    //               child: Padding(
-    //                 padding: EdgeInsets.only(top: widget.shiftClickKeyPadding, right: widget.shiftClickKeyPadding),
-    //                 child: Text(
-    //                   secondaryKey?.text ?? '',
-    //                   textAlign: TextAlign.center,
-    //                   style: shiftClickTextStyle,
-    //                 ),
-    //               ),
-    //             ),
-    //           Align(
-    //             alignment: Alignment.center,
-    //             child: Text(
-    //               alwaysCaps ? key.capsText ?? '' : (isShiftEnabled ? key.capsText : key.text) ?? '',
-    //               style: textStyle,
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // ));
 
     // WORKING NON-OVERLAY VERSIONS (below)
     // return Expanded(
@@ -439,7 +406,7 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   }
 
   /// Creates default UI element for keyboard Action Key.
-  Widget _keyboardDefaultActionKey(VirtualKeyboardKey key, int rowLength, int currentIndex) {
+  Widget _keyboardDefaultActionKey(VirtualKeyboardKey key, int rowLength, int currentIndex, VirtualKeyboardType type) {
     // Holds the action key widget.
     Widget? actionKey;
 
@@ -464,13 +431,12 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
               longPress = false;
             },
             child: Container(
-              // height: double.infinity,
               height: height / customLayoutKeys.activeLayout.defaultLayout.length,
-              // width: double.infinity,
-              // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3,
-              width: (rowLength < 9)
-                  ? (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1
-                  : (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
+              width: (type == VirtualKeyboardType.Numeric)
+                  ? double.infinity
+                  : (rowLength <= 9)
+                      ? (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2.8
+                      : (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
               decoration: BoxDecoration(
                 color: widget.actionKeysContainerColor,
                 borderRadius: BorderRadius.all(
@@ -487,8 +453,10 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         actionKey = Container(
             height: height / customLayoutKeys.activeLayout.defaultLayout.length,
             // TODO: This width doesn't scale down well at all - needs fixing
-            width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
-            // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1,
+            // width: _calculateShiftKeyWidth((height / customLayoutKeys.activeLayout.defaultLayout.length), rowLength),
+            width: (rowLength <= 9)
+                ? (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2.8
+                : (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
             // width: double.infinity,
             decoration: BoxDecoration(
               color: widget.actionKeysContainerColor,
@@ -507,7 +475,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           // width: double.infinity,
           // TODO: This width doesn't scale down well at all - needs fixing
           width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
-          // width: (height / customLayoutKeys.activeLayout.defaultLayout.length) * 3.1,
           decoration: BoxDecoration(
             color: widget.actionKeysContainerColor,
             borderRadius: BorderRadius.all(
@@ -558,10 +525,6 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Icon(
-                    //   Icons.language,
-                    //   color: textColor,
-                    // ),
                     Text(
                       _getCountryFlag(),
                       style: TextStyle(fontSize: 30),
@@ -698,6 +661,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           ),
         );
         break;
+      case VirtualKeyboardKeyAction.Empty:
+        actionKey = Container();
     }
 
     var wdgt = InkWell(
@@ -735,25 +700,30 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
     } else if (key.action == VirtualKeyboardKeyAction.Return) {
       return wdgt;
     } else if (key.action == VirtualKeyboardKeyAction.Backspace) {
-      return wdgt;
+      return (type == VirtualKeyboardType.Numeric) ? Flexible(child: wdgt) : wdgt;
     } else if (key.action == VirtualKeyboardKeyAction.SpecialCharacters) {
       return wdgt;
     } else if (key.action == VirtualKeyboardKeyAction.OtherSpecialCharacters) {
       return wdgt;
+    } else if (key.action == VirtualKeyboardKeyAction.Empty) {
+      return Container();
     } else {
-      // return Flexible(child: wdgt);
       return Flexible(child: wdgt);
-      // return Flexible(
-      //     child: ConstrainedBox(
-      //   constraints: BoxConstraints(
-      //     // minWidth: 160,
-      //     maxWidth: 180,
-      //   ),
-      //   child: wdgt,
-      // ));
-
     }
   }
+
+  // _calculateShiftKeyWidth(double keyWidth, int rowLength) {
+  //   // (rowLength <= 9)
+  //   //     ? (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2.8
+  //   //     : (height / customLayoutKeys.activeLayout.defaultLayout.length) * 2,
+  //   double initialWidth = (rowLength <= 9) ? keyWidth * 2.8 : keyWidth * 2;
+  //   print('keyWidth: $keyWidth');
+  //   print('initialWidth: $initialWidth');
+  //   // if (initialWidth > keyWidth * 2) {
+  //   //   initialWidth = keyWidth * 2;
+  //   // }
+  //   return initialWidth;
+  // }
 
   String _getCountryFlag() {
     switch (widget.defaultLayouts![customLayoutKeys.activeIndex]) {

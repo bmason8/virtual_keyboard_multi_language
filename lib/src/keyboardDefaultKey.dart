@@ -3,6 +3,7 @@ import 'package:virtual_keyboard_multi_language/src/popup_key_retriever.dart';
 import 'package:virtual_keyboard_multi_language/src/popup_virtual_key.dart';
 import 'package:virtual_keyboard_multi_language/virtual_keyboard_multi_language.dart';
 
+/// Builds a default key for the keyboard with long press and drag functionality that shows an overlay for additional characters/symbols
 class KeyboardDefaultKeyWidget extends StatefulWidget {
   const KeyboardDefaultKeyWidget({
     Key? key,
@@ -15,10 +16,13 @@ class KeyboardDefaultKeyWidget extends StatefulWidget {
     required this.alwaysCaps,
     required this.isSpecialCharactersEnabled,
     required this.isOtherSpecialCharactersEnabled,
+    required this.includeSecondaryKeyInPopup,
     required this.keyCapBorderRadius,
     required this.horizontalKeyPadding,
     required this.shiftClickKeyPadding,
     required this.keyContainerColor,
+    this.longPressOverlayContainerColor,
+    this.longPressOverlayKeyContainerColor,
     required this.onKeyPress,
     required this.textStyle,
     required this.shiftClickTextStyle,
@@ -33,10 +37,13 @@ class KeyboardDefaultKeyWidget extends StatefulWidget {
   final bool alwaysCaps;
   final bool isSpecialCharactersEnabled;
   final bool isOtherSpecialCharactersEnabled;
+  final bool includeSecondaryKeyInPopup;
   final double keyCapBorderRadius;
   final double horizontalKeyPadding;
   final double shiftClickKeyPadding;
   final Color keyContainerColor;
+  final Color? longPressOverlayContainerColor;
+  final Color? longPressOverlayKeyContainerColor;
   final Function onKeyPress;
   final TextStyle textStyle;
   final TextStyle shiftClickTextStyle;
@@ -56,7 +63,7 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
   void initState() {
     super.initState();
 
-    popupKeyRetriever = PopupKeyRetriever(virtualKeyboardKey: widget.virtualKey);
+    popupKeyRetriever = PopupKeyRetriever(includeSecondaryKey: widget.includeSecondaryKeyInPopup);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       renderBox = context.findRenderObject() as RenderBox;
@@ -64,6 +71,12 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
       offset = renderBox.localToGlobal(Offset.zero);
       _buildOverlay();
     });
+  }
+
+  @override
+  void dispose() {
+    entry?.dispose();
+    super.dispose();
   }
 
   @override
@@ -89,7 +102,7 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
               _removeOverlay();
             },
             feedback: Card(
-              elevation: 10,
+              elevation: 12,
               child: Container(
                 width: 20,
                 height: 20,
@@ -102,7 +115,6 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
             child: Container(
               height: widget.height / widget.customLayoutKeys.activeLayout.defaultLayout.length,
               decoration: BoxDecoration(
-                // color: widget.keyContainerColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(widget.keyCapBorderRadius),
                 ),
@@ -155,33 +167,41 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
   }
 
   _buildOverlay() {
-    List<VirtualKeyboardKey> additionalKeys = popupKeyRetriever.getAdditionalRelatedSymbols(widget.virtualKey.text!);
-    double topOffsetAdjustment = (additionalKeys.length > 6) ? 2.7 : 1.8;
+    renderBox = context.findRenderObject() as RenderBox;
+    size = renderBox.size;
+    offset = renderBox.localToGlobal(Offset.zero);
+    List<VirtualKeyboardKey> additionalKeys =
+        popupKeyRetriever.getAdditionalRelatedSymbols(widget.virtualKey.text!, widget.secondaryVirtualKey);
+    double topOffsetAdjustment = _calculateOffsetAdjustment(additionalKeys.length);
     entry = OverlayEntry(
         builder: (context) => Positioned(
               top: offset.dy - (size.height * topOffsetAdjustment),
-              left: offset.dx - 24,
+              left: (additionalKeys.length > 1) ? offset.dx - 24 : offset.dx,
               child: GestureDetector(
-                onLongPress: () {},
                 child: Card(
-                  color: widget.keyContainerColor,
-                  elevation: 8,
+                  // color: widget.keyContainerColor,
+                  color: widget.longPressOverlayContainerColor ?? widget.keyContainerColor,
+                  elevation: 10,
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: size.width,
                       maxWidth: size.width * 1.8,
                     ),
                     child: Wrap(
+                      runSpacing: 4.0,
+                      spacing: 4.0,
+                      alignment: (additionalKeys.length > 1) ? WrapAlignment.start : WrapAlignment.spaceEvenly,
                       children: additionalKeys
                           .map((VirtualKeyboardKey virtualKeyboardKey) => DragTarget<String>(
                                 builder: (BuildContext context, List<Object?> candidateData, List<dynamic> rejectedData) {
                                   return PopupVirtualKey(
                                     virtualKeyboardKey: VirtualKeyboardKey(
-                                        text: virtualKeyboardKey.text,
-                                        capsText: virtualKeyboardKey.capsText,
-                                        keyType: VirtualKeyboardKeyType.String),
+                                      text: virtualKeyboardKey.text,
+                                      capsText: virtualKeyboardKey.capsText,
+                                      keyType: VirtualKeyboardKeyType.String,
+                                    ),
                                     textStyle: widget.textStyle,
-                                    keyContainerColor: widget.keyContainerColor,
+                                    keyContainerColor: widget.longPressOverlayKeyContainerColor,
                                     isShiftEnabled: widget.isShiftEnabled,
                                     onKeyPress: popupVirtualKeyPress,
                                   );
@@ -198,6 +218,20 @@ class _KeyboardDefaultKeyWidgetState extends State<KeyboardDefaultKeyWidget> {
                 ),
               ),
             ));
+  }
+
+  double _calculateOffsetAdjustment(int additionalKeysLength) {
+    if (additionalKeysLength > 9) {
+      return 3.8;
+    } else if (additionalKeysLength > 7) {
+      return 2.8;
+    } else if (additionalKeysLength > 6) {
+      return 2;
+    } else if (additionalKeysLength > 4) {
+      return 2;
+    } else {
+      return 1;
+    }
   }
 
   popupVirtualKeyPress(VirtualKeyboardKey virtualKey) {

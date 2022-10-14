@@ -78,7 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.black87,
               child: VirtualKeyboard(
                   height: 300,
-                  //width: 500,
                   rowVerticalPadding: 4.0,
                   actionKeysContainerColor: Colors.lightBlue.shade900,
                   textColor: Colors.white,
@@ -87,10 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   shiftClickFontSize: 14,
                   horizontalKeyPadding: 4.0,
                   keyContainerColor: Colors.lightBlue,
+                  // longPressOverlayContainerColor: Colors.black,
+                  // longPressOverlayKeyContainerColor: Colors.orange,
                   keyCapBorderRadius: 0.0,
                   shiftClickKeyPadding: 4.0,
                   textController: _controllerText,
-                  //customLayoutKeys: _customLayoutKeys,
                   defaultLayouts: [
                     VirtualKeyboardDefaultLayouts.English,
                     VirtualKeyboardDefaultLayouts.German,

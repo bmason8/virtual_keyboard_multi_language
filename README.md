@@ -5,28 +5,6 @@ A simple package for dispaying virtual keyboards on a devices like kiosks and AT
 
 This project has forked from `virtual_keyboard` project because the `virtual_keyboard` project built to only display a buttons on the screen with single language. However, this project will handel the events and aill supports multi-languages.
 
-# Feature and TODO List:
-- (Done) Multi-langugae support.
-- (Done) Customizable layout.
-- (`ToDo`) Option to make a popup floating keyboard/keyNum.
-- (`ToDo`) Adding input result viewer and handel the events.
-
-
-<br>
-<p align="center">
-<img style="height:200px;" alt="FlutterBlue" src="https://github.com/ahmed-eg/virtual_keyboard_multi_language/blob/master/screen3.png?raw=true" />
-</p>
-<br>
-<p align="center">
-<img style="height:200px;" alt="FlutterBlue" src="https://github.com/ahmed-eg/virtual_keyboard_multi_language/blob/master/screen4.png?raw=true" />
-</p>
-<br>
-<p align="center">
-<img style="height:200px;" alt="FlutterBlue" src="https://github.com/ahmed-eg/virtual_keyboard_multi_language/blob/master/screen2.png?raw=true" />
-</p>
-<hr>
-
-
 ## Reference
 
 ### VirtualKeyboard 
@@ -223,7 +201,4 @@ if (key.keyType == VirtualKeyboardKeyType.String) {
 setState(() {});
 }
 ```
-
-- [Ahmed El-Araby](https://github.com/ahmed-eg)
-- [LICENSE - MIT](https://github.com/ahmed-eg/virtual_keyboard_multi_language/blob/master/LICENSE)
 
